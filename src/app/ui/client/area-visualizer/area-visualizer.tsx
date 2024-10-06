@@ -46,6 +46,7 @@ export default function AreaVisualizer() {
   );
 
   useEffect(() => {
+    if (!fetchResponse.data) return;
     const tmp: any[] = [];
     if (fetchResponse.error) {
       setError(true);
@@ -90,7 +91,7 @@ export default function AreaVisualizer() {
         <LucidePaintbrush size={16} />
         Auto Visualizer
       </div>
-      {visuals.length === 0 && (
+      {visuals.length === 0 && !error && (
         <div className="text-center p-4 text-zinc-500 text-sm">
           Visualizable data not found!
         </div>
