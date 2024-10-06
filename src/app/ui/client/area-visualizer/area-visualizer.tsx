@@ -88,11 +88,16 @@ export default function AreaVisualizer() {
     >
       <div className="font-black italic flex items-center justify-start gap-2 p-4 border-b border-zinc-300">
         <LucidePaintbrush size={16} />
-        Visualizer
+        Auto Visualizer
       </div>
       {visuals.length === 0 && (
         <div className="text-center p-4 text-zinc-500 text-sm">
-          Visualizable data not found.
+          Visualizable data not found!
+        </div>
+      )}
+      {error && (
+        <div className="text-center p-4 text-red-500 text-sm">
+          Error occurred from the API!
         </div>
       )}
       <div
@@ -120,7 +125,7 @@ export default function AreaVisualizer() {
                       <div className="text-sm font-bold flex items-center justify-start gap-1">
                         <LucideChevronDown size={16} /> {key}
                       </div>
-                      <div className="p-2 flex flex-col gap-4">
+                      <div className="p-2 flex flex-col gap-2">
                         {Array.isArray(visual[key]) &&
                           visual[key].map((item: any, i: number) => (
                             <div
@@ -141,7 +146,7 @@ export default function AreaVisualizer() {
                                       <div className="text-sm font-bold flex items-center justify-start gap-1">
                                         <LucideChevronDown size={16} /> {k}
                                       </div>
-                                      <div className="p-2 flex flex-col gap-4">
+                                      <div className="p-2 flex flex-col gap-2">
                                         {Array.isArray(item[k]) &&
                                           item[k].map(
                                             (iitem: any, ii: number) => (
