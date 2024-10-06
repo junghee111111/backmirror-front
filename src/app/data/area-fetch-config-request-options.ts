@@ -15,10 +15,10 @@ export const AreaFetchConfigRequestOptionsData = [
     label: "Auth",
     icon: LucideKeyRound,
   },
-  {
-    label: "PathParams",
-    icon: LucideMousePointerClick,
-  },
+  // {
+  //   label: "PathParams",
+  //   icon: LucideMousePointerClick,
+  // },
   {
     label: "QueryParams",
     icon: LucideMessageCircleQuestion,

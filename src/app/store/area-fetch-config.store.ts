@@ -2,6 +2,12 @@
 import { atom } from "jotai";
 
 export type TKeyValue = { id: string; key: string; value: string };
+export type TKeyValueMethod = {
+  id: string;
+  key: string;
+  value: string;
+  method: string;
+};
 
 type TAreaFetchConfigSettings = {
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

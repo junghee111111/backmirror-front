@@ -16,7 +16,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import RequestOptionsTabHeader from "./request-options-tabs/request-options-tab-header";
+import RequestOptionsTabHeader from "./request-options-tabs/headers/request-options-tab-header";
+import RequestOptionsTabAuth from "./request-options-tabs/auth/request-options-tab-auth";
 
 export default function AreaFetchConfigEndpoint() {
   const userConfig = useAtomValue(SAreaFetchConfigSettings);
@@ -47,8 +48,8 @@ export default function AreaFetchConfigEndpoint() {
 
   return (
     <>
-      <div className="w-[700px] bg-white p-4 flex flex-col gap-4">
-        <div className="flex items-center justify-start gap-4">
+      <div className="bg-white p-4 flex flex-col gap-4">
+        <div className="flex w-full items-center justify-start gap-4">
           <AreaFetchConfigSelectMethod />
           <AreaFetchConfigInputUrl />
           <Button
@@ -69,7 +70,7 @@ export default function AreaFetchConfigEndpoint() {
             Send
           </Button>
         </div>
-        <div className="flex items-center gap-4 justify-between">
+        <div className="flex w-full items-center gap-4 justify-between">
           <AreaFetchConfigRequestOptions />
           <div>
             <TooltipProvider>
@@ -89,6 +90,7 @@ export default function AreaFetchConfigEndpoint() {
         </div>
       </div>
       {UIState.selectedOptionTab === "Headers" && <RequestOptionsTabHeader />}
+      {UIState.selectedOptionTab === "Auth" && <RequestOptionsTabAuth />}
     </>
   );
 }

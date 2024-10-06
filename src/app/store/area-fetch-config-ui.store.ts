@@ -5,10 +5,12 @@ type TAreaFetchConfigUISettings = {
   selectedOptionTab: string;
   loading: boolean;
   headersInput: Array<TKeyValue>;
+  authInput: Array<TKeyValue>;
 };
 
 export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
   selectedOptionTab: "Headers",
   loading: false,
   headersInput: [],
+  authInput: [],
 });
