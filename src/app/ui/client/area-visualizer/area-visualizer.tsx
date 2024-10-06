@@ -1,5 +1,9 @@
 "use client";
-import { AREA_VISUALIZER_HEADER_HEIGHT, HEADER_HEIGHT } from "@/app/data/ui";
+import {
+  AREA_VISUALIZER_HEADER_HEIGHT,
+  AREA_VISUALIZER_WIDTH_MINUS,
+  HEADER_HEIGHT,
+} from "@/app/data/ui";
 import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
 import { Badge } from "@/components/ui/badge";
 import { useAtomValue } from "jotai";
@@ -11,7 +15,7 @@ export default function AreaVisualizer() {
   const [visuals, setVisuals] = useState<Array<any>>([]);
   const [error, setError] = useState<boolean>(false);
   const cardClassNames =
-    "p-4 border rounded-md bg-white shadow border-zinc-300 flex flex-col gap-4";
+    "px-3 py-2 border rounded-md bg-white shadow border-zinc-300 flex flex-col gap-4";
 
   const VisualizeObject = (object: any) => (
     <div className="flex items-center justify-between">
@@ -97,7 +101,7 @@ export default function AreaVisualizer() {
           height: `calc(100vh - ${
             HEADER_HEIGHT + AREA_VISUALIZER_HEADER_HEIGHT
           }px)`,
-          width: `calc(100vw - 890px)`,
+          width: `calc(100vw - ${AREA_VISUALIZER_WIDTH_MINUS}px)`,
         }}
       >
         {visuals.length > 0 &&

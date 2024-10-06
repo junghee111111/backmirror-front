@@ -5,7 +5,7 @@ import { LucideFolderPlus, LucideZap } from "lucide-react";
 export default function AreaSavedPresets() {
   return (
     <div
-      className="w-72 flex-shrink-0 bg-slate-50 border-zinc-300 border-r"
+      className="w-[240px] flex-shrink-0 bg-slate-50 border-zinc-300 border-r"
       style={{
         height: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
