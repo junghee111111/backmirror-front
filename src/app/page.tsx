@@ -9,7 +9,7 @@ export default function Home() {
     <div className="gap-0 flex items-start justify-start">
       <AreaSavedPresets />
       <div
-        className="flex items-start flex-col"
+        className="flex items-start flex-col w-[650px]"
         style={{
           height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         }}

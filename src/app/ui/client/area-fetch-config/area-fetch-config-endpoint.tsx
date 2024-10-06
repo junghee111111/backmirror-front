@@ -74,14 +74,14 @@ export default function AreaFetchConfigEndpoint() {
           <AreaFetchConfigRequestOptions />
           <div>
             <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button variant={"outline"} className="font-bold">
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <Button variant={"outline"}>
                     <LucideSave size={16} />
                     &nbsp; Save
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent align="center" side="bottom">
                   <p>Save to Presets</p>
                 </TooltipContent>
               </Tooltip>
