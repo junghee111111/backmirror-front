@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import {
   AREA_VISUALIZER_HEADER_HEIGHT,
@@ -7,7 +8,12 @@ import {
 import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
 import { Badge } from "@/components/ui/badge";
 import { useAtomValue } from "jotai";
-import { LucideChevronDown, LucidePaintbrush } from "lucide-react";
+import {
+  LucideChevronDown,
+  LucideList,
+  LucideListOrdered,
+  LucidePaintbrush,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function AreaVisualizer() {
@@ -18,17 +24,31 @@ export default function AreaVisualizer() {
     "px-3 py-2 border rounded-md bg-white shadow border-zinc-300 flex flex-col gap-4";
 
   const VisualizeObject = (object: any) => (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-grow-0 overflow-x-auto items-center justify-start gap-1">
+    <div className="flex items-start justify-between text-sm">
+      <div className="">
+        {(typeof object === "string" || typeof object === "number") && object}
         {object &&
           Object.keys(object).map((key: string, idx: number) => {
             if (key === "id") return null;
-            if (Array.isArray(object[key]) || typeof object[key] === "object")
+            if (
+              (Array.isArray(object[key]) || typeof object[key] === "object") &&
+              object[key] !== null
+            )
               return null;
             return (
-              <Badge variant={"secondary"} key={`VISUAL_${key}_${idx}`}>
+              <Badge
+                variant={"secondary"}
+                className="mr-2"
+                key={`VISUAL_${key}_${idx}`}
+              >
                 <div className="font-black">{key}</div>
-                <div className="pl-2 whitespace-pre">{object[key]}</div>
+                <div className="pl-2 whitespace-pre">
+                  {object[key] ? (
+                    object[key]
+                  ) : (
+                    <i className="text-red-400">NULL</i>
+                  )}
+                </div>
               </Badge>
             );
           })}
@@ -58,11 +78,7 @@ export default function AreaVisualizer() {
         if (typeof item === "object") {
           const tmpObj = { ...item };
           for (const key in item) {
-            if (Array.isArray(tmpObj[key]) || typeof tmpObj[key] === "object") {
-              tmpObj[key] = item[key];
-            } else {
-              tmpObj[key] = item[key];
-            }
+            tmpObj[key] = item[key];
           }
           tmp.push(tmpObj);
         }
@@ -70,16 +86,13 @@ export default function AreaVisualizer() {
     } else if (typeof fetchResponse.data === "object") {
       const tmpObj = { ...fetchResponse.data };
       for (const key in fetchResponse.data) {
-        if (Array.isArray(tmpObj[key]) || typeof tmpObj[key] === "object") {
-          tmpObj[key] = fetchResponse.data[key];
-        } else {
-          tmpObj[key] = fetchResponse.data[key];
-        }
+        tmpObj[key] = fetchResponse.data[key];
       }
       tmp.push(tmpObj);
     }
     setVisuals(tmp);
   }, [fetchResponse.data]);
+
   return (
     <div
       className="bg-white border-l border-zinc-300"
@@ -102,7 +115,7 @@ export default function AreaVisualizer() {
         </div>
       )}
       <div
-        className="p-2 gap-2 flex flex-col bg-zinc-50 overflow-y-scroll overflow-x-scroll"
+        className="p-2 gap-2 grid grid-cols-1 2xl:grid-cols-2 bg-zinc-50 overflow-y-scroll overflow-x-scroll"
         style={{
           height: `calc(100vh - ${
             HEADER_HEIGHT + AREA_VISUALIZER_HEADER_HEIGHT
@@ -115,11 +128,29 @@ export default function AreaVisualizer() {
           visuals.map((visual, index) => (
             <div key={`VISUAL_${index}`} className={cardClassNames}>
               {VisualizeObject(visual)}
-
               {Object.keys(visual).map((key: string, idx: number) => {
+                const ifArrayPrimitives =
+                  Array.isArray(visual[key]) &&
+                  visual[key].every((item) => typeof item !== "object");
+                if (ifArrayPrimitives) {
+                  return (
+                    <div
+                      className="text-sm flex flex-col gap-2"
+                      key={`Visual_Array_Primitive_key_${visual[key]}`}
+                    >
+                      <div className="text-sm font-bold flex items-center justify-start gap-1">
+                        <LucideListOrdered size={16} /> {key}
+                      </div>
+                      <div className="w-full whitespace-pre-line text-xs break-all px-2">
+                        [{(visual[key] as Array<number | string>).join()}]
+                      </div>
+                    </div>
+                  );
+                }
                 if (
-                  typeof visual[key] === "object" ||
-                  Array.isArray(visual[key])
+                  (typeof visual[key] === "object" ||
+                    Array.isArray(visual[key])) &&
+                  visual[key] !== null
                 ) {
                   return (
                     <div key={`VISUAL_${key}_${idx}`} className="">
@@ -131,7 +162,7 @@ export default function AreaVisualizer() {
                           visual[key].map((item: any, i: number) => (
                             <div
                               key={`VISUAL_${key}_${idx}_${i}`}
-                              className={cardClassNames + " bg-yellow-50"}
+                              className={cardClassNames + ""}
                             >
                               {VisualizeObject(item)}
                               {Object.keys(item).map((k: string, j: number) => {
@@ -167,6 +198,15 @@ export default function AreaVisualizer() {
                               })}
                             </div>
                           ))}
+                        {typeof visual[key] === "object" &&
+                          !Array.isArray(visual[key]) && (
+                            <div
+                              key={`VISUAL_${key}_${idx}`}
+                              className={cardClassNames}
+                            >
+                              {VisualizeObject(visual[key])}
+                            </div>
+                          )}
                       </div>
                     </div>
                   );

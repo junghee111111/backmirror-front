@@ -1,6 +1,6 @@
 import { AreaFetchConfigAuthMethod } from "@/app/data/area-fetch-config-auth-method";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
-import { TKeyValue } from "@/app/store/area-fetch-config.store";
+import { TKeyValueMethod } from "@/app/store/area-fetch-config.store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,7 +13,7 @@ import {
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
 
-export default function AuthKeyValueItem({ item }: { item: TKeyValue }) {
+export default function AuthKeyValueItem({ item }: { item: TKeyValueMethod }) {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);
 
   const handleChange = (key: string, value: string) => {
@@ -49,12 +49,14 @@ export default function AuthKeyValueItem({ item }: { item: TKeyValue }) {
           ))}
         </SelectContent>
       </Select>
-      <Input
-        onChange={(e) => handleChange("key", e.target.value)}
-        value={item.key || ""}
-        placeholder="Key"
-        className="w-[250px] bg-white"
-      ></Input>
+      {item.method != "JWT Bearer" && (
+        <Input
+          onChange={(e) => handleChange("key", e.target.value)}
+          value={item.key || ""}
+          placeholder="Key"
+          className="w-[250px] bg-white"
+        ></Input>
+      )}
       <Input
         placeholder="Value"
         onChange={(e) => handleChange("value", e.target.value)}

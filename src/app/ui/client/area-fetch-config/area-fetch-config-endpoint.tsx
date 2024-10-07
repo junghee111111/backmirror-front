@@ -18,19 +18,38 @@ import {
 } from "@/components/ui/tooltip";
 import RequestOptionsTabHeader from "./request-options-tabs/headers/request-options-tab-header";
 import RequestOptionsTabAuth from "./request-options-tabs/auth/request-options-tab-auth";
+import RequestOptionsTabBody from "./request-options-tabs/body/request-options-tab-body";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AreaFetchConfigEndpoint() {
-  const userConfig = useAtomValue(SAreaFetchConfigSettings);
+  const { toast } = useToast();
+
+  const axiosConfig = useAtomValue(SAreaFetchConfigSettings);
   const storeResponse = useSetAtom(SAreaFetchResponse);
   const UIState = useAtomValue(SAreaFetchConfigUISettings);
   const setUIState = useSetAtom(SAreaFetchConfigUISettings);
+
   const handleSend = async () => {
     setUIState((prev) => ({
       ...prev,
       loading: true,
     }));
+    let data = null;
+    if (axiosConfig.data) {
+      try {
+        data = JSON.parse(axiosConfig.data);
+      } catch (e: unknown) {
+        toast({
+          title: "Error!",
+          description: (e as Error).message,
+          color: "red",
+        });
+      }
+    }
     const resp = await stdFetch({
-      ...userConfig,
+      ...axiosConfig,
+      data,
     });
     storeResponse({
       status: resp.result.status,
@@ -91,6 +110,7 @@ export default function AreaFetchConfigEndpoint() {
       </div>
       {UIState.selectedOptionTab === "Headers" && <RequestOptionsTabHeader />}
       {UIState.selectedOptionTab === "Auth" && <RequestOptionsTabAuth />}
+      {UIState.selectedOptionTab === "Body" && <RequestOptionsTabBody />}
     </>
   );
 }
