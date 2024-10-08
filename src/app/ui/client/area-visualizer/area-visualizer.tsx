@@ -24,44 +24,42 @@ export default function AreaVisualizer() {
     "px-3 py-2 border rounded-md bg-white shadow border-zinc-300 flex flex-col gap-4";
 
   const VisualizeObject = (object: any) => (
-    <div className="flex items-start justify-between text-sm">
-      <div className="">
-        {(typeof object === "string" || typeof object === "number") && object}
-        {object &&
-          Object.keys(object).map((key: string, idx: number) => {
-            if (key === "id") return null;
-            if (
-              (Array.isArray(object[key]) || typeof object[key] === "object") &&
-              object[key] !== null
-            )
-              return null;
-            return (
-              <Badge
-                variant={"secondary"}
-                className="mr-2"
-                key={`VISUAL_${key}_${idx}`}
-              >
-                <div className="font-black">{key}</div>
-                <div className="pl-2 whitespace-pre">
-                  {object[key] ? (
-                    object[key]
-                  ) : (
-                    <i className="text-red-400">NULL</i>
-                  )}
-                </div>
-              </Badge>
-            );
-          })}
-      </div>
+    <div className="leading-7 text-sm">
       {object &&
         object["id"] &&
         typeof object["id"] != "object" &&
         !Array.isArray(object["id"]) && (
-          <Badge>
+          <Badge className="mr-2">
             <div className="font-bold">#</div>
             <div className="pl-1">{object["id"]}</div>
           </Badge>
         )}
+      {(typeof object === "string" || typeof object === "number") && object}
+      {object &&
+        Object.keys(object).map((key: string, idx: number) => {
+          if (key === "id") return null;
+          if (
+            (Array.isArray(object[key]) || typeof object[key] === "object") &&
+            object[key] !== null
+          )
+            return null;
+          return (
+            <Badge
+              variant={"secondary"}
+              className="mr-2"
+              key={`VISUAL_${key}_${idx}`}
+            >
+              <div className="font-black">{key}</div>
+              <div className="pl-2 whitespace-pre-wrap">
+                {object[key] ? (
+                  object[key]
+                ) : (
+                  <i className="text-red-400">NULL</i>
+                )}
+              </div>
+            </Badge>
+          );
+        })}
     </div>
   );
 
@@ -100,9 +98,14 @@ export default function AreaVisualizer() {
         height: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
     >
-      <div className="font-black italic flex items-center justify-start gap-2 p-4 border-b border-zinc-300">
-        <LucidePaintbrush size={16} />
-        Auto Visualizer
+      <div className="flex items-center justify-between gap-2 p-4 border-b border-zinc-300">
+        <div className="font-black italic flex items-center justify-start">
+          <LucidePaintbrush size={16} />
+          Auto Visualizer
+        </div>
+        <div className="text-sm">
+          {visuals.length} {visuals.length > 1 ? "Objects" : "Object"}
+        </div>
       </div>
       {visuals.length === 0 && !error && (
         <div className="text-center p-4 text-zinc-500 text-sm">
@@ -126,93 +129,97 @@ export default function AreaVisualizer() {
         {visuals.length > 0 &&
           !error &&
           visuals.map((visual, index) => (
-            <div key={`VISUAL_${index}`} className={cardClassNames}>
-              {VisualizeObject(visual)}
-              {Object.keys(visual).map((key: string, idx: number) => {
-                const ifArrayPrimitives =
-                  Array.isArray(visual[key]) &&
-                  visual[key].every((item) => typeof item !== "object");
-                if (ifArrayPrimitives) {
-                  return (
-                    <div
-                      className="text-sm flex flex-col gap-2"
-                      key={`Visual_Array_Primitive_key_${visual[key]}`}
-                    >
-                      <div className="text-sm font-bold flex items-center justify-start gap-1">
-                        <LucideListOrdered size={16} /> {key}
+            <div key={`VISUAL_${index}`}>
+              <div className={cardClassNames}>
+                {VisualizeObject(visual)}
+                {Object.keys(visual).map((key: string, idx: number) => {
+                  const ifArrayPrimitives =
+                    Array.isArray(visual[key]) &&
+                    visual[key].every((item) => typeof item !== "object");
+                  if (ifArrayPrimitives) {
+                    return (
+                      <div
+                        className="text-sm flex flex-col gap-2"
+                        key={`Visual_Array_Primitive_key_${visual[key]}`}
+                      >
+                        <div className="text-sm font-bold flex items-center justify-start gap-1">
+                          <LucideListOrdered size={16} /> {key}
+                        </div>
+                        <div className="w-full whitespace-pre-line text-xs break-all px-2">
+                          [{(visual[key] as Array<number | string>).join()}]
+                        </div>
                       </div>
-                      <div className="w-full whitespace-pre-line text-xs break-all px-2">
-                        [{(visual[key] as Array<number | string>).join()}]
+                    );
+                  }
+                  if (
+                    (typeof visual[key] === "object" ||
+                      Array.isArray(visual[key])) &&
+                    visual[key] !== null
+                  ) {
+                    return (
+                      <div key={`VISUAL_${key}_${idx}`}>
+                        <div className="text-sm font-bold flex items-center justify-start gap-1">
+                          <LucideChevronDown size={16} /> {key}
+                        </div>
+                        <div className="p-2 flex flex-col gap-2">
+                          {Array.isArray(visual[key]) &&
+                            visual[key].map((item: any, i: number) => (
+                              <div
+                                key={`VISUAL_${key}_${idx}_${i}`}
+                                className={cardClassNames + ""}
+                              >
+                                {VisualizeObject(item)}
+                                {Object.keys(item).map(
+                                  (k: string, j: number) => {
+                                    if (
+                                      typeof item[k] === "object" ||
+                                      Array.isArray(item[k])
+                                    ) {
+                                      return (
+                                        <div
+                                          key={`VISUAL_${key}_${idx}_${i}_${k}_${j}`}
+                                          className=""
+                                        >
+                                          <div className="text-sm font-bold flex items-center justify-start gap-1">
+                                            <LucideChevronDown size={16} /> {k}
+                                          </div>
+                                          <div className="p-2 flex flex-col gap-2">
+                                            {Array.isArray(item[k]) &&
+                                              item[k].map(
+                                                (iitem: any, ii: number) => (
+                                                  <div
+                                                    key={`VISUAL_${key}_${idx}_${i}_${k}_${j}_${ii}`}
+                                                    className={cardClassNames}
+                                                  >
+                                                    {VisualizeObject(iitem)}
+                                                  </div>
+                                                )
+                                              )}
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }
+                                )}
+                              </div>
+                            ))}
+                          {typeof visual[key] === "object" &&
+                            !Array.isArray(visual[key]) && (
+                              <div
+                                key={`VISUAL_${key}_${idx}`}
+                                className={cardClassNames}
+                              >
+                                {VisualizeObject(visual[key])}
+                              </div>
+                            )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                }
-                if (
-                  (typeof visual[key] === "object" ||
-                    Array.isArray(visual[key])) &&
-                  visual[key] !== null
-                ) {
-                  return (
-                    <div key={`VISUAL_${key}_${idx}`} className="">
-                      <div className="text-sm font-bold flex items-center justify-start gap-1">
-                        <LucideChevronDown size={16} /> {key}
-                      </div>
-                      <div className="p-2 flex flex-col gap-2">
-                        {Array.isArray(visual[key]) &&
-                          visual[key].map((item: any, i: number) => (
-                            <div
-                              key={`VISUAL_${key}_${idx}_${i}`}
-                              className={cardClassNames + ""}
-                            >
-                              {VisualizeObject(item)}
-                              {Object.keys(item).map((k: string, j: number) => {
-                                if (
-                                  typeof item[k] === "object" ||
-                                  Array.isArray(item[k])
-                                ) {
-                                  return (
-                                    <div
-                                      key={`VISUAL_${key}_${idx}_${i}_${k}_${j}`}
-                                      className=""
-                                    >
-                                      <div className="text-sm font-bold flex items-center justify-start gap-1">
-                                        <LucideChevronDown size={16} /> {k}
-                                      </div>
-                                      <div className="p-2 flex flex-col gap-2">
-                                        {Array.isArray(item[k]) &&
-                                          item[k].map(
-                                            (iitem: any, ii: number) => (
-                                              <div
-                                                key={`VISUAL_${key}_${idx}_${i}_${k}_${j}_${ii}`}
-                                                className={cardClassNames}
-                                              >
-                                                {VisualizeObject(iitem)}
-                                              </div>
-                                            )
-                                          )}
-                                      </div>
-                                    </div>
-                                  );
-                                }
-                                return null;
-                              })}
-                            </div>
-                          ))}
-                        {typeof visual[key] === "object" &&
-                          !Array.isArray(visual[key]) && (
-                            <div
-                              key={`VISUAL_${key}_${idx}`}
-                              className={cardClassNames}
-                            >
-                              {VisualizeObject(visual[key])}
-                            </div>
-                          )}
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              })}
+                    );
+                  }
+                  return null;
+                })}
+              </div>
             </div>
           ))}
       </div>
