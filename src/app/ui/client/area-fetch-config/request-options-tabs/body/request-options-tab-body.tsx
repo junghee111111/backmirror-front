@@ -21,7 +21,7 @@ export default function RequestOptionsTabBody() {
     <div className="border-t h-full bg-white">
       <Editor
         height={`270px`}
-        language="typescript"
+        language="json"
         theme="vs-white"
         value={uiStore.bodyInput}
         onChange={(value) => {

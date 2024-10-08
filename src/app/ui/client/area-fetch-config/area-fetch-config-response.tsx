@@ -51,7 +51,7 @@ export default function AreaFetchConfigResponse() {
             height={`calc(100vh - ${
               AREA_FETCH_CONFIG_HEIGHT + HEADER_HEIGHT
             }px)`}
-            language="typescript"
+            language="json"
             theme="vs-white"
             value={
               fetchResponse.data
