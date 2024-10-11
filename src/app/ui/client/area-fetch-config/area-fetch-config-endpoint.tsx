@@ -16,10 +16,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import RequestOptionsTabHeader from "./request-options-tabs/headers/request-options-tab-header";
-import RequestOptionsTabAuth from "./request-options-tabs/auth/request-options-tab-auth";
-import RequestOptionsTabBody from "./request-options-tabs/body/request-options-tab-body";
-import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function AreaFetchConfigEndpoint() {
@@ -66,51 +62,46 @@ export default function AreaFetchConfigEndpoint() {
   };
 
   return (
-    <>
-      <div className="bg-white p-4 flex flex-col gap-4">
-        <div className="flex w-full items-center justify-start gap-4">
-          <AreaFetchConfigSelectMethod />
-          <AreaFetchConfigInputUrl />
-          <Button
-            disabled={UIState.loading}
-            onClick={handleSend}
-            variant="default"
-            className="flex items-center font-bold justify-between gap-2"
-          >
-            {UIState.loading ? (
-              <LucideLoaderCircle
-                className="animate-spin"
-                strokeWidth={2.2}
-                size={15}
-              />
-            ) : (
-              <LucideSend strokeWidth={2.2} size={15} />
-            )}
-            Send
-          </Button>
-        </div>
-        <div className="flex w-full items-center gap-4 justify-between">
-          <AreaFetchConfigRequestOptions />
-          <div>
-            <TooltipProvider>
-              <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button variant={"outline"}>
-                    <LucideSave size={16} />
-                    &nbsp; Save
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent align="center" side="bottom">
-                  <p>Save to Presets</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+    <div className="bg-white p-4 flex flex-col gap-4">
+      <div className="flex w-full items-center justify-start gap-4">
+        <AreaFetchConfigSelectMethod />
+        <AreaFetchConfigInputUrl />
+        <Button
+          disabled={UIState.loading}
+          onClick={handleSend}
+          variant="default"
+          className="flex items-center font-bold justify-between gap-2"
+        >
+          {UIState.loading ? (
+            <LucideLoaderCircle
+              className="animate-spin"
+              strokeWidth={2.2}
+              size={15}
+            />
+          ) : (
+            <LucideSend strokeWidth={2.2} size={15} />
+          )}
+          Send
+        </Button>
+      </div>
+      <div className="flex w-full items-center gap-4 justify-between">
+        <AreaFetchConfigRequestOptions />
+        <div>
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Button variant={"outline"}>
+                  <LucideSave size={16} />
+                  &nbsp; Save
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent align="center" side="bottom">
+                <p>Save to Presets</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
-      {UIState.selectedOptionTab === "Headers" && <RequestOptionsTabHeader />}
-      {UIState.selectedOptionTab === "Auth" && <RequestOptionsTabAuth />}
-      {UIState.selectedOptionTab === "Body" && <RequestOptionsTabBody />}
-    </>
+    </div>
   );
 }

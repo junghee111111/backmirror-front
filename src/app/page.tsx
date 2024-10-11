@@ -1,3 +1,4 @@
+import ClientInitializer from "./client-initializer";
 import { HEADER_HEIGHT } from "./data/ui";
 import AreaFetchConfig from "./ui/client/area-fetch-config/area-fetch-config";
 import AreaFetchConfigResponse from "./ui/client/area-fetch-config/area-fetch-config-response";
@@ -7,6 +8,7 @@ import AreaVisualizer from "./ui/client/area-visualizer/area-visualizer";
 export default function Home() {
   return (
     <div className="gap-0 flex items-start justify-start">
+      <ClientInitializer />
       <AreaSavedPresets />
       <div
         className="flex items-start flex-col w-[600px]"

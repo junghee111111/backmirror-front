@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import { TAvailableHttpMethods } from "../store/area-fetch-config.store";
 
 const ax = axios.create({
   withCredentials: true,
@@ -7,7 +8,7 @@ const ax = axios.create({
 });
 
 export type TStdFetchConfig = {
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method: TAvailableHttpMethods;
   url: string;
   data?: any;
   headers?: any;

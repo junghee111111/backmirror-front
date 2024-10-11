@@ -7,6 +7,7 @@ type TAreaFetchConfigUISettings = {
   headersInput: Array<TKeyValue>;
   authInput: Array<TKeyValueMethod>;
   bodyInput: string;
+  queryParamsInput: Array<TKeyValue>;
 };
 
 export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
@@ -15,4 +16,5 @@ export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
   headersInput: [],
   authInput: [],
   bodyInput: "",
+  queryParamsInput: [],
 });
