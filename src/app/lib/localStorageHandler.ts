@@ -23,10 +23,16 @@ export const loadFromLocalStorage = (key: string): TLoadedResponse => {
   try {
     const value = localStorage.getItem(key);
     if (value) {
-      const data = JSON.parse(value);
-      return { data };
+      return {
+        data: JSON.parse(value),
+        error: false,
+      };
     } else {
-      throw new Error("NULL");
+      throw {
+        data: null,
+        error: true,
+        errorMessage: "No data found in local storage",
+      };
     }
   } catch (e) {
     console.error(e);

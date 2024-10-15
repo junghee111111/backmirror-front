@@ -18,19 +18,33 @@ export default function RequestOptionsTabBody() {
     }
   }, [uiStore.bodyInput]);
   return (
-    <div className="border-t h-full bg-white">
-      <Editor
-        height={`270px`}
-        language="json"
-        theme="vs-white"
-        value={uiStore.bodyInput}
-        onChange={(value) => {
-          setUIStore((prev) => ({
-            ...prev,
-            bodyInput: value || "",
-          }));
-        }}
-      />
-    </div>
+    <>
+      {axoisConfig.method === "GET" && (
+        <div className="border-t border-slate-200">
+          <div className="p-4 text-xs text-slate-500 text-center">
+            Body is not allowed for GET requests.
+          </div>
+        </div>
+      )}
+      <div
+        className={
+          (axoisConfig.method === "GET" ? "hidden" : "") +
+          " border-t h-full bg-white"
+        }
+      >
+        <Editor
+          height={`270px`}
+          language="json"
+          theme="vs-white"
+          value={uiStore.bodyInput}
+          onChange={(value) => {
+            setUIStore((prev) => ({
+              ...prev,
+              bodyInput: value || "",
+            }));
+          }}
+        />
+      </div>
+    </>
   );
 }

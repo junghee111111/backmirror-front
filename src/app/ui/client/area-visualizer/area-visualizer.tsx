@@ -6,15 +6,51 @@ import {
   HEADER_HEIGHT,
 } from "@/app/data/ui";
 import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
 import { useAtomValue } from "jotai";
 import {
   LucideChevronDown,
-  LucideList,
   LucideListOrdered,
   LucidePaintbrush,
+  Terminal,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+export function CopyToClipboard({ text }: { text: string }) {
+  const toast = useToast();
+  const copyToClipboard = () => {
+    toast.toast({
+      title: "📋 Copied!",
+      description: text,
+    });
+    navigator.clipboard.writeText(text);
+  };
+  return (
+    <TooltipProvider>
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
+          <button
+            onClick={copyToClipboard}
+            className="hover:text-blue-500 hover:bg-blue-50 rounded text-left text-xs cursor-pointer"
+          >
+            {text}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent align="center" side="top">
+          <p>Copy this value to clipboard 📋</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
 
 export default function AreaVisualizer() {
   const fetchResponse = useAtomValue(SAreaFetchResponse);
@@ -31,7 +67,7 @@ export default function AreaVisualizer() {
         !Array.isArray(object["id"]) && (
           <Badge className="mr-2">
             <div className="font-bold">#</div>
-            <div className="pl-1">{object["id"]}</div>
+            <CopyToClipboard text={object["id"]} />
           </Badge>
         )}
       {(typeof object === "string" || typeof object === "number") && object}
@@ -46,16 +82,16 @@ export default function AreaVisualizer() {
           return (
             <Badge
               variant={"secondary"}
-              className="mr-2"
+              className="mr-2 max-w-[420px]"
               key={`VISUAL_${key}_${idx}`}
             >
               <div className="font-black">{key}</div>
-              <div className="pl-2 whitespace-pre-wrap">
-                {object[key] ? (
-                  object[key]
-                ) : (
-                  <i className="text-red-400">NULL</i>
-                )}
+              <div
+                className={
+                  (!object[key] ? "text-red-400" : "") + " pl-2 break-all"
+                }
+              >
+                {object[key] ? <CopyToClipboard text={object[key]} /> : "NULL"}
               </div>
             </Badge>
           );
@@ -107,18 +143,8 @@ export default function AreaVisualizer() {
           {visuals.length} {visuals.length > 1 ? "Objects" : "Object"}
         </div>
       </div>
-      {visuals.length === 0 && !error && (
-        <div className="text-center p-4 text-zinc-500 text-sm">
-          Visualizable data not found!
-        </div>
-      )}
-      {error && (
-        <div className="text-center p-4 text-red-500 text-sm">
-          Error occurred from the API!
-        </div>
-      )}
       <div
-        className="p-2 gap-2 grid grid-cols-1 2xl:grid-cols-2 bg-zinc-50 overflow-y-scroll overflow-x-scroll"
+        className="p-2 gap-2 bg-zinc-50 overflow-y-scroll overflow-x-scroll"
         style={{
           height: `calc(100vh - ${
             HEADER_HEIGHT + AREA_VISUALIZER_HEADER_HEIGHT
@@ -126,6 +152,23 @@ export default function AreaVisualizer() {
           width: `calc(100vw - ${AREA_VISUALIZER_WIDTH_MINUS}px)`,
         }}
       >
+        {visuals.length === 0 && !error && fetchResponse.data && (
+          <Alert variant={"destructive"}>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>Error while parsing!</AlertTitle>
+            <AlertDescription>Visualizable data not found!</AlertDescription>
+          </Alert>
+        )}
+        {error && (
+          <Alert variant={"destructive"}>
+            <Terminal className="h-4 w-4" />
+            <AlertTitle>HTTP Error!</AlertTitle>
+            <AlertDescription>
+              {fetchResponse.status} {fetchResponse.statusText} error has
+              occurred!
+            </AlertDescription>
+          </Alert>
+        )}
         {visuals.length > 0 &&
           !error &&
           visuals.map((visual, index) => (

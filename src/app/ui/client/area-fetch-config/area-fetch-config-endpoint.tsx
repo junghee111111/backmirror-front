@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { LucideLoaderCircle, LucideSave, LucideSend } from "lucide-react";
+import { LucideLoaderCircle, LucideSend } from "lucide-react";
 import AreaFetchConfigRequestOptions from "./area-fetch-config-request-options";
 import { stdFetch } from "@/app/lib/stdFetch";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -10,13 +10,8 @@ import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
 import AreaFetchConfigSelectMethod from "./area-fetch-config-select-method";
 import AreaFetchConfigInputUrl from "./area-fetch-config-input-url";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import SavePresetButton from "./atoms/save-preset-button";
 
 export default function AreaFetchConfigEndpoint() {
   const { toast } = useToast();
@@ -43,8 +38,21 @@ export default function AreaFetchConfigEndpoint() {
         });
       }
     }
+    const url = new URL(axiosConfig.url);
+    for (const queryParam of UIState.queryParamsInput) {
+      url.searchParams.append(queryParam.key, queryParam.value);
+    }
+    let headers = axiosConfig.headers;
+    for (const header of UIState.headersInput) {
+      headers = {
+        ...headers,
+        [header.key]: header.value,
+      };
+    }
     const resp = await stdFetch({
       ...axiosConfig,
+      headers,
+      url: url.toString(),
       data,
     });
     storeResponse({
@@ -87,19 +95,7 @@ export default function AreaFetchConfigEndpoint() {
       <div className="flex w-full items-center gap-4 justify-between">
         <AreaFetchConfigRequestOptions />
         <div>
-          <TooltipProvider>
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger asChild>
-                <Button variant={"outline"}>
-                  <LucideSave size={16} />
-                  &nbsp; Save
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent align="center" side="bottom">
-                <p>Save to Presets</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <SavePresetButton />
         </div>
       </div>
     </div>

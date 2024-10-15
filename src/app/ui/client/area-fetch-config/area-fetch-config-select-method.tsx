@@ -11,16 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 export default function AreaFetchConfigSelectMethod() {
-  const setUserConfig = useSetAtom(SAreaFetchConfigSettings);
+  const setAxiosConfigStore = useSetAtom(SAreaFetchConfigSettings);
+  const axiosConfigStore = useAtomValue(SAreaFetchConfigSettings);
   return (
     <Select
       onValueChange={(value) => {
         const typedValue = value as EAreaFetchConfigMethod;
-        setUserConfig((prev) => ({ ...prev, method: typedValue }));
+        setAxiosConfigStore((prev) => ({ ...prev, method: typedValue }));
       }}
+      value={axiosConfigStore.method}
     >
       <SelectTrigger className="w-[120px]">
         <SelectValue placeholder={AreaFetchConfigMethod[0]} />
