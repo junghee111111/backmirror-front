@@ -12,6 +12,7 @@ import AreaFetchConfigInputUrl from "./area-fetch-config-input-url";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { useToast } from "@/hooks/use-toast";
 import SavePresetButton from "./atoms/save-preset-button";
+import { fetchWithClientSettings } from "@/app/functions/services/fetchService";
 
 export default function AreaFetchConfigEndpoint() {
   const { toast } = useToast();
@@ -26,43 +27,26 @@ export default function AreaFetchConfigEndpoint() {
       ...prev,
       loading: true,
     }));
-    let data = null;
-    if (axiosConfig.data) {
-      try {
-        data = JSON.parse(axiosConfig.data);
-      } catch (e: unknown) {
-        toast({
-          title: "Error!",
-          description: (e as Error).message,
-          color: "red",
-        });
-      }
+    try {
+      const resp = await fetchWithClientSettings({
+        axiosConfig,
+        UIState,
+      });
+      storeResponse({
+        status: resp.result.status,
+        statusText: resp.result.statusText,
+        data: resp.result.data,
+        headers: resp.result.headers,
+        config: resp.result.config,
+        error: resp.error,
+      });
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: `Error sending request: ${(error as Error).message}`,
+        color: "red",
+      });
     }
-    const url = new URL(axiosConfig.url);
-    for (const queryParam of UIState.queryParamsInput) {
-      url.searchParams.append(queryParam.key, queryParam.value);
-    }
-    let headers = axiosConfig.headers;
-    for (const header of UIState.headersInput) {
-      headers = {
-        ...headers,
-        [header.key]: header.value,
-      };
-    }
-    const resp = await stdFetch({
-      ...axiosConfig,
-      headers,
-      url: url.toString(),
-      data,
-    });
-    storeResponse({
-      status: resp.result.status,
-      statusText: resp.result.statusText,
-      data: resp.result.data,
-      headers: resp.result.headers,
-      config: resp.result.config,
-      error: resp.error,
-    });
     setUIState((prev) => ({
       ...prev,
       loading: false,

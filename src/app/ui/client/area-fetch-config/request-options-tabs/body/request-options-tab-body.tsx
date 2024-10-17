@@ -4,6 +4,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Editor } from "@monaco-editor/react";
 import { useEffect } from "react";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
+import { AREA_FETCH_CONFIG_BODY_EDITOR_HEIGHT } from "@/app/data/ui";
 
 export default function RequestOptionsTabBody() {
   const uiStore = useAtomValue(SAreaFetchConfigUISettings);
@@ -33,7 +34,7 @@ export default function RequestOptionsTabBody() {
         }
       >
         <Editor
-          height={`270px`}
+          height={`${AREA_FETCH_CONFIG_BODY_EDITOR_HEIGHT}px`}
           language="json"
           theme="vs-white"
           value={uiStore.bodyInput}

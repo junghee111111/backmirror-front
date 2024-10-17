@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LucidePlus } from "lucide-react";
 import QueryParamsKeyValuItem from "./request-options-tab-query-params-item";
+import { AREA_FETCH_CONFIG_TAB_HEIGHT } from "@/app/data/ui";
 
 export default function RequestOptionsTabQueryParams() {
   const uiStore = useAtomValue(SAreaFetchConfigUISettings);
@@ -12,9 +13,9 @@ export default function RequestOptionsTabQueryParams() {
   return (
     <div className="border-t h-full bg-white">
       <div
-        className="overflow-y-auto flex flex-col py-2 gap-2 bg-zinc-50"
+        className="overflow-y-auto flex flex-col bg-zinc-50"
         style={{
-          height: "220px",
+          height: `${AREA_FETCH_CONFIG_TAB_HEIGHT}px`,
         }}
       >
         {uiStore.queryParamsInput.map((item) => (
@@ -35,6 +36,7 @@ export default function RequestOptionsTabQueryParams() {
                   id: Date.now().toString(),
                   key: "",
                   value: "",
+                  enabled: true,
                 },
               ],
             }));

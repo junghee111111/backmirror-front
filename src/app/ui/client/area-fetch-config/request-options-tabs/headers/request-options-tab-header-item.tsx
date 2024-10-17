@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 export default function HeaderKeyValueItem({ item }: { item: TKeyValue }) {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);
 
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: string, value: CheckedState | string) => {
     setUIStore((prev) => ({
       ...prev,
       headersInput: prev.headersInput.map((i) =>
@@ -25,7 +27,16 @@ export default function HeaderKeyValueItem({ item }: { item: TKeyValue }) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 px-2">
+    <div
+      className={
+        (item.enabled === true ? " bg-white " : "bg-transparent ") +
+        "flex items-center justify-between gap-2 p-2 border-b border-slate-200"
+      }
+    >
+      <Checkbox
+        checked={item.enabled}
+        onCheckedChange={(checked) => handleChange("enabled", checked)}
+      />
       <Input
         onChange={(e) => handleChange("key", e.target.value)}
         value={item.key || ""}

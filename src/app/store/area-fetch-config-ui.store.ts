@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { TKeyValue, TKeyValueMethod } from "./area-fetch-config.store";
 
-type TAreaFetchConfigUISettings = {
+export type TAreaFetchConfigUISettings = {
   selectedOptionTab: string;
   loading: boolean;
   headersInput: Array<TKeyValue>;
@@ -11,7 +11,7 @@ type TAreaFetchConfigUISettings = {
 };
 
 export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
-  selectedOptionTab: "Headers",
+  selectedOptionTab: "Header",
   loading: false,
   headersInput: [],
   authInput: [],

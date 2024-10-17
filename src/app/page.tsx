@@ -1,5 +1,5 @@
 import ClientInitializer from "./client-initializer";
-import { HEADER_HEIGHT } from "./data/ui";
+import { AREA_REQ_AND_RESP_WIDTH, HEADER_HEIGHT } from "./data/ui";
 import AreaFetchConfig from "./ui/client/area-fetch-config/area-fetch-config";
 import AreaFetchConfigResponse from "./ui/client/area-fetch-config/area-fetch-config-response";
 import AreaSavedPresets from "./ui/client/area-saved-presets/area-saved-presets";
@@ -11,8 +11,9 @@ export default function Home() {
       <ClientInitializer />
       <AreaSavedPresets />
       <div
-        className="flex items-start flex-col w-[600px]"
+        className="flex items-start flex-col"
         style={{
+          width: `${AREA_REQ_AND_RESP_WIDTH}px`,
           height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         }}
       >

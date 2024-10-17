@@ -2,25 +2,20 @@ import {
   LucideFileCog,
   LucideKeyRound,
   LucideMessageCircleQuestion,
-  LucideMousePointerClick,
   LucidePackage,
 } from "lucide-react";
 
 export const AreaFetchConfigRequestOptionsData = [
   {
-    label: "Headers",
+    label: "Header",
     icon: LucideFileCog,
   },
   {
     label: "Auth",
     icon: LucideKeyRound,
   },
-  // {
-  //   label: "PathParams",
-  //   icon: LucideMousePointerClick,
-  // },
   {
-    label: "QueryParams",
+    label: "QueryParam",
     icon: LucideMessageCircleQuestion,
   },
   {

@@ -18,10 +18,10 @@ export default function AreaFetchConfig() {
       }}
     >
       <AreaFetchConfigEndpoint />
-      {UIState.selectedOptionTab === "Headers" && <RequestOptionsTabHeader />}
+      {UIState.selectedOptionTab === "Header" && <RequestOptionsTabHeader />}
       {UIState.selectedOptionTab === "Auth" && <RequestOptionsTabAuth />}
       {UIState.selectedOptionTab === "Body" && <RequestOptionsTabBody />}
-      {UIState.selectedOptionTab === "QueryParams" && (
+      {UIState.selectedOptionTab === "QueryParam" && (
         <RequestOptionsTabQueryParams />
       )}
     </div>

@@ -51,7 +51,7 @@ export default function AreaSavedPresetsListItem({
     });
   };
   return (
-    <div className="text-sm bg-white border-b flex flex-col gap-2 py-2 border-slate-200">
+    <div className="text-sm bg-white border-b flex flex-col gap-2 py-2 px-1 border-slate-200">
       <div className="px-2 pb-0">
         <span className="text-slate-500 text-xs py-1">
           {protocol}
