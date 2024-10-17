@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CheckedState } from "@radix-ui/react-checkbox";
 import { atom } from "jotai";
 
 export type TAvailableHttpMethods = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type TKeyValue = {
   id: string;
-  enabled: CheckedState;
+  enabled: boolean;
   key: string;
   value: string;
 };
 
 export type TKeyValueMethod = {
   id: string;
-  enabled: CheckedState;
+  enabled: boolean;
   key: string;
   value: string;
   method: string;

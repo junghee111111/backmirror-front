@@ -21,7 +21,8 @@ export default function RequestOptionsTabAuth() {
     if (JWTExists) {
       toast.toast({
         title: "JWT Bearer already exists",
-        description: "The last JWT Bearer option will override the upper ones.",
+        description:
+          "The last JWT Bearer option will override the previous ones.",
       });
     }
     setUIStore((prev) => ({
@@ -56,7 +57,7 @@ export default function RequestOptionsTabAuth() {
         <div className="text-xs text-red-500">
           <strong>Note:</strong>
           <br />
-          Auth options will override other options if they have the same key.
+          Auth options with the same key will override others.
         </div>
         <Button
           onClick={addNewItem}

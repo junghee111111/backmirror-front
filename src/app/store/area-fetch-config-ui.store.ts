@@ -11,7 +11,7 @@ export type TAreaFetchConfigUISettings = {
 };
 
 export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
-  selectedOptionTab: "Header",
+  selectedOptionTab: "Auth",
   loading: false,
   headersInput: [],
   authInput: [],

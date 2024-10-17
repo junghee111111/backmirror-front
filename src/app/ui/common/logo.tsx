@@ -2,11 +2,20 @@ import { LucideCandy } from "lucide-react";
 
 export default function Logo() {
   return (
-    <div className="text-xl font-black flex items-center justify-start gap-1 text-black">
-      <LucideCandy className="text-pink-500 " size={24} strokeWidth={2.5} />
-      <div className="bg-gradient-to-r from-pink-500 to-violet-500 inline-block text-transparent bg-clip-text">
-        Swaggirl
+    <div>
+      <div className="text-2xl font-black flex items-center justify-start gap-0 text-black">
+        <strong className="font-normal">b</strong>
+        <strong className="font-medium">a</strong>
+        <strong className="font-semibold">c</strong>
+        <strong className="font-bold">k</strong>
+        <strong className="font-black">M</strong>
+        <strong className="font-extrabold">i</strong>
+        <strong className="font-bold">r</strong>
+        <strong className="font-semibold">r</strong>
+        <strong className="font-medium">o</strong>
+        <strong className="font-normal">r</strong>
       </div>
+      <div className="text-xs text-slate-500">- Mirrors Backend API -</div>
     </div>
   );
 }

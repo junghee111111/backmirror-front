@@ -144,7 +144,7 @@ export default function AreaVisualizer() {
         </div>
       </div>
       <div
-        className="p-2 gap-2 bg-zinc-50 overflow-y-scroll overflow-x-scroll"
+        className="p-2 gap-2 bg-zinc-50 overflow-scroll"
         style={{
           height: `calc(100vh - ${
             HEADER_HEIGHT + AREA_VISUALIZER_HEADER_HEIGHT
@@ -166,6 +166,11 @@ export default function AreaVisualizer() {
             <AlertDescription>
               {fetchResponse.status} {fetchResponse.statusText} error has
               occurred!
+              {fetchResponse.data?.response && (
+                <code className="text-white block mt-2 bg-red-900 p-2 rounded-lg text-xs whitespace-pre">
+                  {JSON.stringify(fetchResponse.data.response, null, 2)}
+                </code>
+              )}
             </AlertDescription>
           </Alert>
         )}

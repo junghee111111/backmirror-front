@@ -40,12 +40,15 @@ export async function stdFetch(
     return {
       error: true,
       result: {
-        data: e,
-        status: e.response ? e.response.status : 999,
+        data: {
+          ...e,
+          response: e.response ? e.response.data : {},
+        },
+        status: e.response ? e.response.status : "",
         statusText: e.response ? e.response.statusText : "Network Error",
         headers: e.response ? e.response.headers : {},
         params: {},
-        responseType: "Axios Error",
+        responseType: "stdFetch/axios Error",
       },
     };
   }

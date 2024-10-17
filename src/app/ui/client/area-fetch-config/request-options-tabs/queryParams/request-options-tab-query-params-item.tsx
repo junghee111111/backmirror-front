@@ -3,6 +3,7 @@ import { TKeyValue } from "@/app/store/area-fetch-config.store";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
@@ -33,7 +34,7 @@ export default function QueryParamsKeyValuItem({ item }: { item: TKeyValue }) {
         "flex items-center justify-between gap-2 p-2 border-b border-slate-200"
       }
     >
-      <Checkbox
+      <Switch
         checked={item.enabled}
         onCheckedChange={(checked) => handleChange("enabled", checked)}
       />

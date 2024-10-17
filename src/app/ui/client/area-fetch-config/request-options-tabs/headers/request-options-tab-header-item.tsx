@@ -6,6 +6,7 @@ import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import { Switch } from "@/components/ui/switch";
 
 export default function HeaderKeyValueItem({ item }: { item: TKeyValue }) {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);
@@ -33,7 +34,7 @@ export default function HeaderKeyValueItem({ item }: { item: TKeyValue }) {
         "flex items-center justify-between gap-2 p-2 border-b border-slate-200"
       }
     >
-      <Checkbox
+      <Switch
         checked={item.enabled}
         onCheckedChange={(checked) => handleChange("enabled", checked)}
       />

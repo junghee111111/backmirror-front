@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
@@ -18,7 +19,7 @@ import { LucideTrash } from "lucide-react";
 export default function AuthKeyValueItem({ item }: { item: TKeyValueMethod }) {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);
 
-  const handleChange = (key: string, value: CheckedState | string) => {
+  const handleChange = (key: string, value: boolean | string) => {
     setUIStore((prev) => ({
       ...prev,
       authInput: prev.authInput.map((i) =>
@@ -41,7 +42,7 @@ export default function AuthKeyValueItem({ item }: { item: TKeyValueMethod }) {
         "flex items-center justify-between gap-2 p-2 border-b border-slate-200"
       }
     >
-      <Checkbox
+      <Switch
         checked={item.enabled}
         onCheckedChange={(checked) => handleChange("enabled", checked)}
       />

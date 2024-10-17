@@ -7,13 +7,14 @@ import {
 
 export const AreaFetchConfigRequestOptionsData = [
   {
-    label: "Header",
-    icon: LucideFileCog,
-  },
-  {
     label: "Auth",
     icon: LucideKeyRound,
   },
+  {
+    label: "Header",
+    icon: LucideFileCog,
+  },
+
   {
     label: "QueryParam",
     icon: LucideMessageCircleQuestion,
