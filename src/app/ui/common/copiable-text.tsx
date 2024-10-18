@@ -27,7 +27,7 @@ export function CopiableText({ text }: { text: string }) {
             className="hover:text-blue-500 hover:bg-blue-50 rounded text-left cursor-pointer whitespace-pre-wrap break-all"
           >
             {checkIfImageFile(text) && (
-              <Badge size="xs" variant={"outline"} className="mr-1">
+              <Badge size="xs" variant={"secondary"} className="mr-1">
                 <LucideImage size={10} />
                 &nbsp;Image Detected
               </Badge>
