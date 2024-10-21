@@ -10,6 +10,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarMenu,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
@@ -73,12 +74,14 @@ export default function AreaSavedPresetsList() {
             </SidebarGroupLabel>
             <CollapsibleContent>
               <SidebarGroupContent>
-                {savedPresetsForHost.map((preset, index) => (
-                  <AreaSavedPresetsListItem
-                    key={`PRESET_ITEM_${preset.protocol}_${preset.host}_${preset.pathname}_${index}`}
-                    preset={preset}
-                  />
-                ))}
+                <SidebarMenu>
+                  {savedPresetsForHost.map((preset, index) => (
+                    <AreaSavedPresetsListItem
+                      key={`PRESET_ITEM_${preset.protocol}_${preset.host}_${preset.pathname}_${index}`}
+                      preset={preset}
+                    />
+                  ))}
+                </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
           </SidebarGroup>

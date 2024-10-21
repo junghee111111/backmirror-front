@@ -10,8 +10,7 @@ import RequestOptionsTabQueryParams from "./request-options-tabs/queryParams/req
 import { useEffect, useState } from "react";
 import { TPreset } from "@/app/store/preset.store";
 import { getPresetById } from "@/app/lib/presetRepository";
-import { Badge } from "@/components/ui/badge";
-import { LucideZap } from "lucide-react";
+import { LucideFile, LucideZap } from "lucide-react";
 
 export default function AreaFetchConfig() {
   const UIState = useAtomValue(SAreaFetchConfigUISettings);
@@ -30,18 +29,19 @@ export default function AreaFetchConfig() {
         height: `${AREA_FETCH_CONFIG_HEIGHT}px`,
       }}
     >
-      {selectedPreset && (
-        <div className="absolute -top-7 left-1 flex items-center justify-start gap-2">
+      {selectedPreset ? (
+        <div className="p-4 pb-0 flex items-center justify-start gap-2">
           <span className="text-xs font-bold flex text-blue-500 items-center gap-1">
             <LucideZap size={10} />
             Preset Loaded
           </span>
-          <Badge variant={"secondary"}>
-            {selectedPreset.protocol}
-            {"//"}
-            {selectedPreset.host}
-            {selectedPreset.pathname}
-          </Badge>
+        </div>
+      ) : (
+        <div className="p-4 pb-0 flex items-center justify-start gap-2">
+          <span className="text-xs font-bold flex text-black items-center gap-1">
+            <LucideFile size={10} />
+            Draft
+          </span>
         </div>
       )}
       <AreaFetchConfigEndpoint />
