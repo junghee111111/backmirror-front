@@ -62,7 +62,7 @@ export default function RecursiveVisualizer({
     //const StringOnlyArray = obj.every((item: any) => typeof item === "string");
     const ComplexArray = !NumberOnlyArray && !BooleanOnlyArray;
     return (
-      <Card className="ring-red-300">
+      <Card className="ring-zinc-200">
         <CardHeader>
           <CardTitle className="flex items-center justify-start gap-2">
             <Button
@@ -133,7 +133,9 @@ export default function RecursiveVisualizer({
             )}
           </CardTitle>
         </CardHeader>
-        <CardContent className={(!isChildOpen ? "hidden " : " ") + "py-5"}>
+        <CardContent
+          className={(!isChildOpen ? "hidden " : " ") + "py-5 space-y-3"}
+        >
           {Object.keys(obj).map((key: string, idx: number) => (
             <RecursiveVisualizer
               key={`RECUR_VIS_ARRAY_ITEM_${obj}_${

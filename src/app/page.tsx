@@ -14,9 +14,6 @@ export default function Home() {
       <SidebarProvider>
         <AreaSavedPresets />
         <main className="gap-0 flex items-start justify-start">
-          {/* <div>
-            <SidebarTrigger />
-          </div> */}
           <div
             className="flex items-start flex-col"
             style={{

@@ -17,46 +17,6 @@ export default function AreaVisualizer() {
   const [visuals, setVisuals] = useState<Array<any>>([]);
   const [error, setError] = useState<boolean>(false);
 
-  // const VisualizeObject = (object: any) => (
-  //   <div className="leading-7 text-sm">
-  //     {object &&
-  //       object["id"] &&
-  //       typeof object["id"] != "object" &&
-  //       !Array.isArray(object["id"]) && (
-  //         <Badge className="mr-2">
-  //           <div className="font-bold">#</div>
-  //           <CopyToClipboard text={object["id"]} />
-  //         </Badge>
-  //       )}
-  //     {(typeof object === "string" || typeof object === "number") && object}
-  //     {object &&
-  //       Object.keys(object).map((key: string, idx: number) => {
-  //         if (key === "id") return null;
-  //         if (
-  //           (Array.isArray(object[key]) || typeof object[key] === "object") &&
-  //           object[key] !== null
-  //         )
-  //           return null;
-  //         return (
-  //           <Badge
-  //             variant={"secondary"}
-  //             className="mr-2 max-w-[420px]"
-  //             key={`VISUAL_${key}_${idx}`}
-  //           >
-  //             <div className="font-black">{key}</div>
-  //             <div
-  //               className={
-  //                 (!object[key] ? "text-red-400" : "") + " pl-2 break-all"
-  //               }
-  //             >
-  //               {object[key] ? <CopyToClipboard text={object[key]} /> : "NULL"}
-  //             </div>
-  //           </Badge>
-  //         );
-  //       })}
-  //   </div>
-  // );
-
   useEffect(() => {
     if (!fetchResponse.data) return;
     const tmp: any[] = [];
@@ -89,7 +49,7 @@ export default function AreaVisualizer() {
     <div
       className="bg-white border-l border-zinc-300"
       style={{
-        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+        height: `calc(100vh)`,
       }}
     >
       <div className="flex items-center justify-between gap-2 p-4 border-b border-zinc-300">
