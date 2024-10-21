@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from "./ui/common/header";
 import "@fontsource-variable/noto-sans";
 import "./globals.css";
 
@@ -15,10 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -55,7 +55,7 @@ export default function AreaFetchConfigEndpoint() {
   return (
     <div
       className={
-        (UIState.selectedPresetId ? "ring-4 ring-blue-300 z-10 rounded " : "") +
+        (UIState.selectedPresetId ? "z-10 " : "") +
         "bg-white p-4 flex flex-col gap-4"
       }
     >

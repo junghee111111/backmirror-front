@@ -36,9 +36,11 @@ export default function SavePresetButton() {
         bodyInput: uiStore.bodyInput,
         queryParamsInput: uiStore.queryParamsInput,
         authInput: uiStore.authInput,
-        id: encryptBase64(
-          JSON.stringify(uiStore) + new Date().toISOString()
-        ).substring(0, 64),
+        id:
+          encryptBase64(
+            JSON.stringify(uiStore) + new Date().toISOString()
+          ).substring(0, 32) +
+          encryptBase64(JSON.stringify(parsedURL)).substring(0, 32),
       };
     } catch (e: unknown) {
       toast.toast({

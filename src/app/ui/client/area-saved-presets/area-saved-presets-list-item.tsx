@@ -59,8 +59,7 @@ export default function AreaSavedPresetsListItem({
       className={
         (preset.id === uiStore.selectedPresetId
           ? "border-l-4 border-l-blue-400 bg-blue-50 "
-          : "") +
-        " text-sm bg-white border-b flex flex-col gap-2 py-2 px-1 border-slate-200"
+          : "") + "  flex flex-col gap-2 py-2 px-1 "
       }
     >
       <div className="text-sm flex items-center justify-start gap-2 px-2 py-0">
@@ -83,7 +82,8 @@ export default function AreaSavedPresetsListItem({
                 className={
                   (uiStore.selectedPresetId === preset.id
                     ? "text-blue-500 font-bold "
-                    : "") + " hover:text-blue-500 text-left text-xs"
+                    : "") +
+                  " hover:text-blue-500 text-left whitespace-pre text-ellipsis overflow-hidden"
                 }
               >
                 {preset.pathname}
@@ -96,7 +96,7 @@ export default function AreaSavedPresetsListItem({
         </TooltipProvider>
       </div>
       {isOptionsAvailable && (
-        <div className="text-xs px-2 flex flex-row justify-start gap-2">
+        <div className="px-2 flex flex-row justify-start gap-2">
           {preset.headersInput.length > 0 && (
             <Badge size={"xs"} variant={"outline"}>
               HEADER

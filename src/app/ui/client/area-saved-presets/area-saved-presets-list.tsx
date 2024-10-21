@@ -3,10 +3,19 @@
 import { TPreset } from "@/app/store/preset.store";
 import { useEffect, useState } from "react";
 import AreaSavedPresetsListItem from "./area-saved-presets-list-item";
-import { AREA_SAVED_PRESETS_HEADER_HEIGHT, HEADER_HEIGHT } from "@/app/data/ui";
-import { LucideLock, LucideUnlock } from "lucide-react";
+import { ChevronDown, LucideLock, LucideUnlock } from "lucide-react";
 import { useAtomValue } from "jotai";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@radix-ui/react-collapsible";
 
 export default function AreaSavedPresetsList() {
   const presets: Array<TPreset> = useAtomValue(
@@ -28,51 +37,53 @@ export default function AreaSavedPresetsList() {
     }
     setHosts(tmpHosts);
   }, [presets]);
-  return (
-    <div
-      className="overflow-y-auto"
-      style={{
-        height: `calc(100vh - ${
-          HEADER_HEIGHT + AREA_SAVED_PRESETS_HEADER_HEIGHT
-        }px)`,
-      }}
-    >
-      {hosts.map((host) => {
-        const savedPresetsForHost = presets.filter((preset) => {
-          const presetProtocolHost = preset.protocol + "//" + preset.host;
-          return presetProtocolHost === host;
-        });
-        const splits = host.split("://");
-        const protocol = splits[0];
-        const hostName = splits[1];
-        return (
-          <>
-            <div className="p-3 text-xs font-bold flex flex-row bg-white border-b border-slate-200 shadow">
-              <div
-                className={
-                  (protocol === "https"
-                    ? "text-green-600 bg-green-50 "
-                    : "bg-red-50 text-red-500 ") + " flex flex-row gap-1"
-                }
-              >
-                {protocol === "https" && <LucideLock size={14} />}
-                {protocol === "http" && <LucideUnlock size={14} />}
-                {protocol}
-                {`://`}
-              </div>
-              <div className="flex-grow overflow-hidden text-ellipsis whitespace-pre">
-                {hostName}
-              </div>
-            </div>
-            {savedPresetsForHost.map((preset, index) => (
-              <AreaSavedPresetsListItem
-                key={`PRESET_ITEM_${preset.protocol}_${preset.host}_${preset.pathname}_${index}`}
-                preset={preset}
-              />
-            ))}
-          </>
-        );
-      })}
-    </div>
-  );
+  return hosts.map((host) => {
+    const savedPresetsForHost = presets.filter((preset) => {
+      const presetProtocolHost = preset.protocol + "//" + preset.host;
+      return presetProtocolHost === host;
+    });
+    const splits = host.split("://");
+    const protocol = splits[0];
+    const hostName = splits[1];
+    return (
+      <>
+        <Collapsible defaultOpen className="group/collapsible">
+          <SidebarGroup>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger>
+                <div className="flex items-center justify-start gap-1 overflow-hidden text-ellipsis whitespace-pre">
+                  <div
+                    className={
+                      (protocol === "https"
+                        ? "text-green-600 bg-green-50 "
+                        : "bg-red-50 text-red-500 ") + " flex flex-row gap-1"
+                    }
+                  >
+                    {protocol === "https" && <LucideLock size={14} />}
+                    {protocol === "http" && <LucideUnlock size={14} />}
+                    {protocol}
+                    {`://`}
+                  </div>
+                  <div className="flex-grow overflow-hidden text-ellipsis whitespace-pre">
+                    {hostName}
+                  </div>
+                </div>
+                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                {savedPresetsForHost.map((preset, index) => (
+                  <AreaSavedPresetsListItem
+                    key={`PRESET_ITEM_${preset.protocol}_${preset.host}_${preset.pathname}_${index}`}
+                    preset={preset}
+                  />
+                ))}
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+      </>
+    );
+  });
 }
