@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function checkIfImageFile(obj: any) {
   if (typeof obj === "string") {
     return obj.match(/\.(jpeg|jpg|gif|png|webp)/i) != null;

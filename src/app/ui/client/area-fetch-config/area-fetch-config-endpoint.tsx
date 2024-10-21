@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { LucideLoaderCircle, LucideSend } from "lucide-react";
 import AreaFetchConfigRequestOptions from "./area-fetch-config-request-options";
-import { stdFetch } from "@/app/lib/stdFetch";
 import { useAtomValue, useSetAtom } from "jotai";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
@@ -54,7 +53,12 @@ export default function AreaFetchConfigEndpoint() {
   };
 
   return (
-    <div className="bg-white p-4 flex flex-col gap-4">
+    <div
+      className={
+        (UIState.selectedPresetId ? "ring-4 ring-blue-300 z-10 rounded " : "") +
+        "bg-white p-4 flex flex-col gap-4"
+      }
+    >
       <div className="flex w-full items-center justify-start gap-4">
         <AreaFetchConfigSelectMethod />
         <AreaFetchConfigInputUrl />
@@ -78,7 +82,7 @@ export default function AreaFetchConfigEndpoint() {
       </div>
       <div className="flex w-full items-center gap-4 justify-between">
         <AreaFetchConfigRequestOptions />
-        <div>
+        <div className="flex items-center justify-end gap-4">
           <SavePresetButton />
         </div>
       </div>

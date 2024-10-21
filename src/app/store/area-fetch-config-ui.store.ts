@@ -1,8 +1,11 @@
 import { atom } from "jotai";
 import { TKeyValue, TKeyValueMethod } from "./area-fetch-config.store";
+import { TPreset } from "./preset.store";
 
 export type TAreaFetchConfigUISettings = {
   selectedOptionTab: string;
+  selectedPresetId: string | null;
+  presets: Array<TPreset>;
   loading: boolean;
   headersInput: Array<TKeyValue>;
   authInput: Array<TKeyValueMethod>;
@@ -17,4 +20,6 @@ export const SAreaFetchConfigUISettings = atom<TAreaFetchConfigUISettings>({
   authInput: [],
   bodyInput: "",
   queryParamsInput: [],
+  selectedPresetId: null,
+  presets: [],
 });

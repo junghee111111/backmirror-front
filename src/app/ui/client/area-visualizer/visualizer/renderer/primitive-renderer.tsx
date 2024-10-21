@@ -1,8 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CopiableText } from "@/app/ui/common/copiable-text";
-import { Badge } from "@/components/ui/badge";
 import { checkIfImageFile } from "./util";
-import Image from "next/image";
-import { LucideImage } from "lucide-react";
 
 export default function PrimitiveRenderer({
   obj,

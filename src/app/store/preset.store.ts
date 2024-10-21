@@ -7,11 +7,14 @@ import {
 
 export type TPreset = {
   method: TAvailableHttpMethods;
-  url: string;
+  protocol: string;
+  host: string;
+  pathname: string;
   headersInput: Array<TKeyValue>;
   bodyInput: string;
   queryParamsInput: Array<TKeyValue>;
   authInput: Array<TKeyValueMethod>;
+  id: string;
 };
 
 export const SPresetList = atom<TPreset[]>([]);
