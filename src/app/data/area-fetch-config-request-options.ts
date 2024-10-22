@@ -1,4 +1,5 @@
 import {
+  LucideBrain,
   LucideFileCog,
   LucideKeyRound,
   LucideMessageCircleQuestion,
@@ -12,7 +13,7 @@ export const AreaFetchConfigRequestOptionsData = [
   },
   {
     label: "Header",
-    icon: LucideFileCog,
+    icon: LucideBrain,
   },
 
   {

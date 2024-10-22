@@ -13,7 +13,7 @@ export default function Home() {
 
       <SidebarProvider>
         <AreaSavedPresets />
-        <main className="gap-0 flex items-start justify-start">
+        <main className="gap-0 flex items-start w-full justify-start">
           <div
             className="flex items-start flex-col"
             style={{
@@ -24,9 +24,7 @@ export default function Home() {
             <AreaFetchConfig />
             <AreaFetchConfigResponse />
           </div>
-          <div className="flex-grow flex flex-col gap-4">
-            <AreaVisualizer />
-          </div>
+          <AreaVisualizer />
         </main>
       </SidebarProvider>
     </div>

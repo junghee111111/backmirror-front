@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import {
-  AREA_VISUALIZER_HEADER_HEIGHT,
-  AREA_VISUALIZER_WIDTH_MINUS,
-  HEADER_HEIGHT,
-} from "@/app/data/ui";
+import { AREA_VISUALIZER_HEADER_HEIGHT, HEADER_HEIGHT } from "@/app/data/ui";
 import { SAreaFetchResponse } from "@/app/store/area-fetch-response.store";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { useAtomValue } from "jotai";
@@ -47,7 +43,7 @@ export default function AreaVisualizer() {
 
   return (
     <div
-      className="bg-white border-l border-zinc-300"
+      className="bg-white border-l flex-grow border-zinc-300"
       style={{
         height: `calc(100vh)`,
       }}
@@ -67,7 +63,6 @@ export default function AreaVisualizer() {
           height: `calc(100vh - ${
             HEADER_HEIGHT + AREA_VISUALIZER_HEADER_HEIGHT
           }px)`,
-          width: `calc(100vw - ${AREA_VISUALIZER_WIDTH_MINUS}px)`,
         }}
       >
         {visuals.length === 0 && !error && fetchResponse.data && (
