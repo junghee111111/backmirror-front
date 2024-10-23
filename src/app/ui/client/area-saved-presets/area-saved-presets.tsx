@@ -15,12 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  User2,
-  ChevronUp,
-  LucideGithub,
-  LucideExternalLink,
-} from "lucide-react";
+import { User2, ChevronUp, LucideExternalLink } from "lucide-react";
 
 export default function AreaSavedPresets() {
   return (

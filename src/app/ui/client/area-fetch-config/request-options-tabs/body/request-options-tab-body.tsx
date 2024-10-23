@@ -22,7 +22,12 @@ export default function RequestOptionsTabBody() {
     <>
       {axoisConfig.method === "GET" && (
         <div className="border-t border-slate-200">
-          <div className="p-4 text-xs text-slate-500 text-center">
+          <div
+            style={{
+              height: `${AREA_FETCH_CONFIG_BODY_EDITOR_HEIGHT}px`,
+            }}
+            className="p-4 text-xs text-slate-500 text-center"
+          >
             Body is not allowed for GET requests.
           </div>
         </div>
