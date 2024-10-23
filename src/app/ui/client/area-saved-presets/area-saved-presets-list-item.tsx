@@ -1,10 +1,12 @@
 "use client";
 import { AreaFetchConfigRequestOptionsData } from "@/app/data/area-fetch-config-request-options";
+import { generatePresetId } from "@/app/lib/encrypt";
+import { loadFromLocalStorage } from "@/app/lib/localStorageHandler";
+import { getPresets, savePreset } from "@/app/lib/presetRepository";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 import { TPreset } from "@/app/store/preset.store";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
-import { MoreHorizontal } from "lucide-react";
+import { LucideCopyPlus, LucideTrash2, MoreHorizontal } from "lucide-react";
 import { createElement } from "react";
 
 export default function AreaSavedPresetsListItem({
@@ -60,6 +62,63 @@ export default function AreaSavedPresetsListItem({
         </span>
       ),
     });
+  };
+
+  const handleDeletePreset = (id: string) => {
+    if (uiStore.selectedPresetId === id) {
+      setUIStore((prev) => ({
+        ...prev,
+        headersInput: [],
+        bodyInput: "",
+        queryParamsInput: [],
+        authInput: [],
+        selectedPresetId: "",
+      }));
+      setAxiosConfigStore((prev) => ({
+        ...prev,
+        method: "GET",
+        url: "",
+      }));
+    }
+    const newPresets = uiStore.presets.filter((preset) => preset.id !== id);
+    savePreset(newPresets);
+    setUIStore((prev) => ({
+      ...prev,
+      presets: newPresets,
+    }));
+    toast.toast({
+      title: "Preset deleted successfully",
+      description: (
+        <span>
+          <strong>{preset.method}</strong>&nbsp;
+          {`${preset.protocol}//${preset.host}${preset.pathname}`}
+        </span>
+      ),
+    });
+  };
+
+  const handleDuplicatePreset = (id: string) => {
+    const savedPresets: TPreset[] = (loadFromLocalStorage("globalPresets")
+      .data || []) as unknown as TPreset[];
+    const targetPreset = savedPresets.find((preset) => preset.id === id);
+    if (targetPreset) {
+      savedPresets.push({
+        ...targetPreset,
+        id: generatePresetId(
+          JSON.stringify(targetPreset.id),
+          JSON.stringify(targetPreset)
+        ),
+      });
+      savePreset(savedPresets);
+      setUIStore((prev) => ({
+        ...prev,
+        presets: getPresets(),
+      }));
+      toast.toast({
+        description: `Successfully duplicated.`,
+        color: "green",
+      });
+    }
   };
 
   return (
@@ -114,10 +173,21 @@ export default function AreaSavedPresetsListItem({
           </SidebarMenuAction>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" align="start">
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              handleDuplicatePreset(preset.id);
+            }}
+          >
+            <LucideCopyPlus />
             <span>Duplicate</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              handleDeletePreset(preset.id);
+            }}
+            className="text-red-500"
+          >
+            <LucideTrash2 />
             <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -1,9 +1,6 @@
-import { encryptBase64 } from "@/app/lib/encrypt";
-import {
-  loadFromLocalStorage,
-  saveToLocalStorage,
-} from "@/app/lib/localStorageHandler";
-import { getPresets } from "@/app/lib/presetRepository";
+import { generatePresetId } from "@/app/lib/encrypt";
+import { loadFromLocalStorage } from "@/app/lib/localStorageHandler";
+import { getPresets, savePreset } from "@/app/lib/presetRepository";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 import { TPreset } from "@/app/store/preset.store";
@@ -16,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
-import { LucidePlusCircle, LucideSave } from "lucide-react";
+import { LucideCopyPlus, LucidePlusCircle, LucideSave } from "lucide-react";
 
 export default function SavePresetButton() {
   const toast = useToast();
@@ -36,11 +33,10 @@ export default function SavePresetButton() {
         bodyInput: uiStore.bodyInput,
         queryParamsInput: uiStore.queryParamsInput,
         authInput: uiStore.authInput,
-        id:
-          encryptBase64(
-            JSON.stringify(uiStore) + new Date().toISOString()
-          ).substring(0, 32) +
-          encryptBase64(JSON.stringify(parsedURL)).substring(0, 32),
+        id: generatePresetId(
+          JSON.stringify(uiStore),
+          JSON.stringify(parsedURL)
+        ),
       };
     } catch (e: unknown) {
       toast.toast({
@@ -58,7 +54,7 @@ export default function SavePresetButton() {
     const newPreset: TPreset | null = fromInput();
     if (newPreset) {
       savedPresets.push(newPreset);
-      saveToLocalStorage("globalPresets", JSON.stringify(savedPresets));
+      savePreset(savedPresets);
       setUiStore((prev) => ({
         ...prev,
         presets: getPresets(),
@@ -71,6 +67,7 @@ export default function SavePresetButton() {
       });
     }
   };
+
   const handleSavePreset = (presetId: string) => {
     const savedPresets: TPreset[] = (loadFromLocalStorage("globalPresets")
       .data || []) as unknown as TPreset[];
@@ -82,7 +79,7 @@ export default function SavePresetButton() {
           ...newPreset,
           id: presetId,
         };
-        saveToLocalStorage("globalPresets", JSON.stringify(savedPresets));
+        savePreset(savedPresets);
         setUiStore((prev) => ({
           ...prev,
           presets: getPresets(),
@@ -103,10 +100,14 @@ export default function SavePresetButton() {
             <Button
               onClick={handleAddPreset}
               variant={"outline"}
-              className="border-yellow-400 text-yellow-500 hover:bg-yellow-50 bg-yellow-50  hover:text-yellow-600 hover:ring-2 hover:ring-yellow-300"
+              className="flex items-center justify-center gap-2"
             >
-              <LucidePlusCircle size={16} />
-              &nbsp; New
+              {uiStore.selectedPresetId ? (
+                <LucideCopyPlus size={16} />
+              ) : (
+                <LucidePlusCircle size={16} />
+              )}
+              {uiStore.selectedPresetId ? "Duplicate" : "Make Preset"}
             </Button>
           </TooltipTrigger>
           <TooltipContent align="center" side="bottom">

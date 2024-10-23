@@ -10,7 +10,6 @@ import AreaFetchConfigSelectMethod from "./area-fetch-config-select-method";
 import AreaFetchConfigInputUrl from "./area-fetch-config-input-url";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { useToast } from "@/hooks/use-toast";
-import SavePresetButton from "./atoms/save-preset-button";
 import { fetchWithClientSettings } from "@/app/functions/services/fetchService";
 
 export default function AreaFetchConfigEndpoint() {
@@ -82,9 +81,6 @@ export default function AreaFetchConfigEndpoint() {
       </div>
       <div className="flex w-full items-center gap-4 justify-between">
         <AreaFetchConfigRequestOptions />
-        <div className="flex items-center justify-end gap-4">
-          <SavePresetButton />
-        </div>
       </div>
     </div>
   );
