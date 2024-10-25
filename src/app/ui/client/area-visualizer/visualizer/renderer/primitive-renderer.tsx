@@ -6,7 +6,7 @@ export default function PrimitiveRenderer({
   obj,
   objKey,
 }: {
-  obj: any;
+  obj: string | number | boolean | undefined | null;
   objKey?: string;
 }) {
   return (
@@ -15,12 +15,17 @@ export default function PrimitiveRenderer({
       <span className="text-blue-400 mr-2">{typeof obj}</span>
       <div className="flex flex-col gap-2">
         {checkIfImageFile(obj) && (
-          <img src={obj} width={400} height={400} alt={obj} />
+          <img
+            src={obj as string}
+            width={400}
+            height={400}
+            alt={obj as string}
+          />
         )}
         {obj === undefined || obj === null ? (
           <span className="text-red-500">NULL</span>
         ) : (
-          <CopiableText text={obj} />
+          <CopiableText text={obj.toString()} />
         )}
       </div>
     </div>

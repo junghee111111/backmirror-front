@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { CopiableText } from "../../../common/copiable-text";
 import PrimitiveRenderer from "./renderer/primitive-renderer";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideBox, LucideListOrdered } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import JsonCopyButton from "./atom/json-copy-button";
 
 export default function RecursiveVisualizer({
   obj,
@@ -25,22 +27,8 @@ export default function RecursiveVisualizer({
   const isObjArray = Array.isArray(obj);
   const isObjPrimitive = typeof obj != "object";
 
-  // undefined, null
-  if (isObjUndefined || isObjNull) {
-    return (
-      <div
-        className={"flex items-center justify-start gap-2"}
-        style={{
-          marginLeft: `${(level - 1) * 4}px`,
-        }}
-      >
-        <PrimitiveRenderer obj={obj} objKey={objKey} />
-      </div>
-    );
-  }
-
-  // string, number, boolean
-  if (isObjExist && isObjPrimitive) {
+  // string, number, boolean, undefined, null
+  if ((isObjExist && isObjPrimitive) || isObjUndefined || isObjNull) {
     return (
       <div
         className={"flex items-center justify-start text-xs"}
@@ -84,6 +72,7 @@ export default function RecursiveVisualizer({
                 {obj.length} {obj.length > 1 ? "Items" : "Item"}
               </span>
             )}
+            <JsonCopyButton copyString={JSON.stringify(obj)} />
           </CardTitle>
         </CardHeader>
         <CardContent className={(!isChildOpen ? "hidden " : " ") + "pb-5"}>
@@ -131,6 +120,7 @@ export default function RecursiveVisualizer({
                 {objKey}
               </span>
             )}
+            <JsonCopyButton copyString={JSON.stringify(obj)} />
           </CardTitle>
         </CardHeader>
         <CardContent
