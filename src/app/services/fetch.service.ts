@@ -1,4 +1,4 @@
-import { stdFetch } from "@/app/lib/stdFetch";
+import { stdFetch } from "@/app/utils/stdFetch";
 import { TAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { TAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 

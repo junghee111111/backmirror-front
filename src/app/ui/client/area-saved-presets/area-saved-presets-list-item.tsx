@@ -1,7 +1,7 @@
 "use client";
 import { AreaFetchConfigRequestOptionsData } from "@/app/data/area-fetch-config-request-options";
-import { generatePresetId } from "@/app/lib/encrypt";
-import { getPresets, savePreset } from "@/app/lib/presetRepository";
+import { generatePresetId } from "@/app/utils/encrypt";
+import { getPresets, savePreset } from "@/app/services/preset.service";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 import { TPreset } from "@/app/store/preset.store";

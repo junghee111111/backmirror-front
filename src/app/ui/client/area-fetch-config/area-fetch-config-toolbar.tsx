@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { TPreset } from "@/app/store/preset.store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
-import { getPresetById } from "@/app/lib/presetRepository";
+import { getPresetById } from "@/app/services/preset.service";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 
 export default function AreaFetchConfigToolbar() {

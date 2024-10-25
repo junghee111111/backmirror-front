@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from "react";
 import { SAreaFetchConfigUISettings } from "./store/area-fetch-config-ui.store";
 import { useSetAtom } from "jotai";
-import { getPresets } from "./lib/presetRepository";
+import { getPresets } from "./services/preset.service";
 
 export default function ClientInitializer() {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);

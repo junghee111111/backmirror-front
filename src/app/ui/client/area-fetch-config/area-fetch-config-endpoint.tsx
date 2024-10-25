@@ -10,7 +10,7 @@ import AreaFetchConfigSelectMethod from "./area-fetch-config-select-method";
 import AreaFetchConfigInputUrl from "./area-fetch-config-input-url";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { useToast } from "@/hooks/use-toast";
-import { fetchWithClientSettings } from "@/app/functions/services/fetchService";
+import { fetchWithClientSettings } from "@/app/services/fetch.service";
 
 export default function AreaFetchConfigEndpoint() {
   const { toast } = useToast();

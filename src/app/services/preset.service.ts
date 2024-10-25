@@ -6,11 +6,11 @@
  * Encryption/Decryption of saved preset string buffer.
  */
 import { TPreset } from "../store/preset.store";
-import { encryptPresets } from "./encrypt";
+import { encryptPresets } from "../utils/encrypt";
 import {
   decryptFromLocalStorage,
   saveToLocalStorage,
-} from "./localStorageHandler";
+} from "../utils/localStorageHandler";
 
 export function getPresetById(id: string): TPreset | null {
   const presets = decryptFromLocalStorage("globalPresets").data || [];
