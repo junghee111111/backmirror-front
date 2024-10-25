@@ -1,6 +1,5 @@
 import {
   LucideBrain,
-  LucideFileCog,
   LucideKeyRound,
   LucideMessageCircleQuestion,
   LucidePackage,
