@@ -47,46 +47,48 @@ export default function AreaSavedPresetsList() {
     const protocol = splits[0];
     const hostName = splits[1];
     return (
-      <>
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger>
-                <div className="flex items-center justify-start gap-1 overflow-hidden text-ellipsis whitespace-pre">
-                  <div
-                    className={
-                      (protocol === "https"
-                        ? "text-green-600 bg-green-50 "
-                        : "bg-red-50 text-red-500 ") + " flex flex-row gap-1"
-                    }
-                  >
-                    {protocol === "https" && <LucideLock size={14} />}
-                    {protocol === "http" && <LucideUnlock size={14} />}
-                    {protocol}
-                    {`://`}
-                  </div>
-                  <div className="flex-grow overflow-hidden text-ellipsis whitespace-pre">
-                    {hostName}
-                  </div>
+      <Collapsible
+        key={`Presets_Collapsible_${host}`}
+        defaultOpen
+        className="group/collapsible"
+      >
+        <SidebarGroup>
+          <SidebarGroupLabel asChild>
+            <CollapsibleTrigger>
+              <div className="flex items-center justify-start gap-1 overflow-hidden text-ellipsis whitespace-pre">
+                <div
+                  className={
+                    (protocol === "https"
+                      ? "text-green-600 bg-green-50 "
+                      : "bg-red-50 text-red-500 ") + " flex flex-row gap-1"
+                  }
+                >
+                  {protocol === "https" && <LucideLock size={14} />}
+                  {protocol === "http" && <LucideUnlock size={14} />}
+                  {protocol}
+                  {`://`}
                 </div>
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {savedPresetsForHost.map((preset, index) => (
-                    <AreaSavedPresetsListItem
-                      key={`PRESET_ITEM_${preset.protocol}_${preset.host}_${preset.pathname}_${index}`}
-                      preset={preset}
-                    />
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-      </>
+                <div className="flex-grow overflow-hidden text-ellipsis whitespace-pre">
+                  {hostName}
+                </div>
+              </div>
+              <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+            </CollapsibleTrigger>
+          </SidebarGroupLabel>
+          <CollapsibleContent>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {savedPresetsForHost.map((preset) => (
+                  <AreaSavedPresetsListItem
+                    key={`PRESET_ITEM_${preset.id}`}
+                    preset={preset}
+                  />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </CollapsibleContent>
+        </SidebarGroup>
+      </Collapsible>
     );
   });
 }
