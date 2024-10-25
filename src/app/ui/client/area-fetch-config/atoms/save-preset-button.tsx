@@ -53,7 +53,13 @@ export default function SavePresetButton() {
       .data || []) as unknown as TPreset[];
     const newPreset: TPreset | null = fromInput();
     if (newPreset) {
-      savedPresets.push(newPreset);
+      savedPresets.push({
+        ...newPreset,
+        id: generatePresetId(
+          JSON.stringify(uiStore),
+          JSON.stringify(axiosConfigStore)
+        ),
+      });
       savePreset(savedPresets);
       setUiStore((prev) => ({
         ...prev,
