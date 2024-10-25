@@ -1,7 +1,6 @@
 "use client";
 import { AreaFetchConfigRequestOptionsData } from "@/app/data/area-fetch-config-request-options";
 import { generatePresetId } from "@/app/lib/encrypt";
-import { loadFromLocalStorage } from "@/app/lib/localStorageHandler";
 import { getPresets, savePreset } from "@/app/lib/presetRepository";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
@@ -98,8 +97,7 @@ export default function AreaSavedPresetsListItem({
   };
 
   const handleDuplicatePreset = (id: string) => {
-    const savedPresets: TPreset[] = (loadFromLocalStorage("globalPresets")
-      .data || []) as unknown as TPreset[];
+    const savedPresets: TPreset[] = getPresets();
     const targetPreset = savedPresets.find((preset) => preset.id === id);
     if (targetPreset) {
       savedPresets.push({
