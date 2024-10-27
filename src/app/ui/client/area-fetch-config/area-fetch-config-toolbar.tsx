@@ -38,12 +38,14 @@ export default function AreaFetchConfigToolbar() {
   };
   return (
     <div className="p-4 pb-0 flex items-center justify-between gap-2">
-      <div className=" flex items-center justify-start gap-2">
+      <div className="flex items-center justify-start gap-2">
         <SidebarTrigger />
         {selectedPreset ? (
           <div className="text-sm bg-blue-50 font-bold px-2 py-1 rounded flex text-blue-500 items-center gap-1">
             <LucideZap size={16} />
-            Preset Loaded
+            <div className="text-ellipsis max-w-[160px] whitespace-nowrap overflow-hidden">
+              {selectedPreset.name || "Preset Loaded"}
+            </div>
             <Button onClick={resetPreset} variant={"ghost"} size={"xs"}>
               <LucideX size={14} strokeWidth={2} />
             </Button>
