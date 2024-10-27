@@ -4,18 +4,12 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Logo from "../../common/logo";
 import AreaSavedPresetsList from "./area-saved-presets-list";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { User2, ChevronUp, LucideExternalLink } from "lucide-react";
+import { LucideExternalLink } from "lucide-react";
+import SidebarDropdown from "./atoms/sidebar-dropdown";
 
 export default function AreaSavedPresets() {
   return (
@@ -31,28 +25,7 @@ export default function AreaSavedPresets() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> Username
-                  <ChevronUp className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-              >
-                <DropdownMenuItem>
-                  <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Billing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Sign out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SidebarDropdown />
           </SidebarMenuItem>
         </SidebarMenu>
         <div className="px-2 pb-1 text-xs flex items-center justify-start gap-1">

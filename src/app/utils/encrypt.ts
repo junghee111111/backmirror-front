@@ -13,7 +13,7 @@
  * @returns
  */
 export function encryptBase64(input: string): string {
-  return btoa(input);
+  return btoa(encodeURIComponent(input));
 }
 
 /**
@@ -22,7 +22,7 @@ export function encryptBase64(input: string): string {
  * @returns
  */
 export function decryptBase64(input: string): string {
-  return atob(input);
+  return decodeURIComponent(atob(input));
 }
 
 /**

@@ -12,7 +12,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
-import { LucideCopyPlus, LucidePlusCircle, LucideSave } from "lucide-react";
+import { LucideCopyPlus, LucideFilePlus, LucideSave } from "lucide-react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DialogMakeNewPreset from "../../dialogs/dialog-make-new-preset";
 
 export default function SavePresetButton() {
   const toast = useToast();
@@ -32,6 +34,8 @@ export default function SavePresetButton() {
         bodyInput: uiStore.bodyInput,
         queryParamsInput: uiStore.queryParamsInput,
         authInput: uiStore.authInput,
+        name: "",
+        description: null,
         id: generatePresetId(
           JSON.stringify(uiStore),
           JSON.stringify(parsedURL)
@@ -47,31 +51,6 @@ export default function SavePresetButton() {
     }
   };
 
-  const handleAddPreset = () => {
-    const savedPresets: TPreset[] = getPresets();
-    const newPreset: TPreset | null = fromInput();
-    if (newPreset) {
-      savedPresets.push({
-        ...newPreset,
-        id: generatePresetId(
-          JSON.stringify(uiStore),
-          JSON.stringify(axiosConfigStore)
-        ),
-      });
-      savePreset(savedPresets);
-      setUiStore((prev) => ({
-        ...prev,
-        presets: getPresets(),
-        selectedPresetId: newPreset.id,
-      }));
-      toast.toast({
-        title: "Saved!",
-        description: `${axiosConfigStore.method} ${axiosConfigStore.url}\nSuccessfully saved.`,
-        color: "green",
-      });
-    }
-  };
-
   const handleSavePreset = (presetId: string) => {
     const savedPresets: TPreset[] = getPresets();
     const newPreset: TPreset | null = fromInput();
@@ -81,6 +60,8 @@ export default function SavePresetButton() {
         savedPresets[index] = {
           ...newPreset,
           id: presetId,
+          name: savedPresets[index].name,
+          description: savedPresets[index].description,
         };
         savePreset(savedPresets);
         setUiStore((prev) => ({
@@ -100,18 +81,23 @@ export default function SavePresetButton() {
       <TooltipProvider>
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
-            <Button
-              onClick={handleAddPreset}
-              variant={"outline"}
-              className="flex items-center justify-center gap-2"
-            >
-              {uiStore.selectedPresetId ? (
-                <LucideCopyPlus size={16} />
-              ) : (
-                <LucidePlusCircle size={16} />
-              )}
-              {uiStore.selectedPresetId ? "Duplicate" : "Make Preset"}
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  disabled={!axiosConfigStore.url}
+                  variant={"outline"}
+                  className="flex items-center justify-center gap-2"
+                >
+                  {uiStore.selectedPresetId ? (
+                    <LucideCopyPlus size={16} />
+                  ) : (
+                    <LucideFilePlus size={16} />
+                  )}
+                  {uiStore.selectedPresetId ? "Duplicate" : "Save new"}
+                </Button>
+              </DialogTrigger>
+              <DialogMakeNewPreset />
+            </Dialog>
           </TooltipTrigger>
           <TooltipContent align="center" side="bottom">
             <p>Save changes as a new preset</p>

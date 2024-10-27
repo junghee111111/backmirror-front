@@ -9,6 +9,7 @@ import { TPreset } from "../store/preset.store";
 import { encryptPresets } from "../utils/encrypt";
 import {
   decryptFromLocalStorage,
+  fromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageHandler";
 
@@ -19,6 +20,10 @@ export function getPresetById(id: string): TPreset | null {
 
 export function getPresets(): TPreset[] {
   return decryptFromLocalStorage("globalPresets").data || [];
+}
+
+export function getPresetsRaw(): string {
+  return fromLocalStorage("globalPresets").data || "";
 }
 
 export function savePreset(body: TPreset[]): void {

@@ -26,16 +26,42 @@ export const saveToLocalStorage = (key: string, value: string) => {
 };
 
 /**
- * load data from local storage
+ * load data and parse JSON from local storage
  * @param key key to load from local storage
  * @returns TLoadedResponse
  */
-export const loadFromLocalStorage = (key: string): TLoadedResponse => {
+export const jsonFromLocalStorage = (key: string): TLoadedResponse => {
   try {
     const value = localStorage.getItem(key);
     if (value) {
       return {
         data: JSON.parse(value),
+        error: false,
+      };
+    } else {
+      throw {
+        data: null,
+        error: true,
+        errorMessage: "No data found in local storage",
+      };
+    }
+  } catch (e) {
+    console.error(e);
+    return { data: null, error: true, errorMessage: (e as Error).message };
+  }
+};
+
+/**
+ * load data from local storage
+ * @param key key to load from local storage
+ * @returns TLoadedResponse
+ */
+export const fromLocalStorage = (key: string): TLoadedResponse => {
+  try {
+    const value = localStorage.getItem(key);
+    if (value) {
+      return {
+        data: value,
         error: false,
       };
     } else {

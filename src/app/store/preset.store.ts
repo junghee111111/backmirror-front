@@ -15,6 +15,8 @@ export type TPreset = {
   queryParamsInput: Array<TKeyValue>;
   authInput: Array<TKeyValueMethod>;
   id: string;
+  name: string;
+  description: string | null;
 };
 
 export const SPresetList = atom<TPreset[]>([]);

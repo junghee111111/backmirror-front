@@ -21,6 +21,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LucideCopyPlus, LucideTrash2, MoreHorizontal } from "lucide-react";
 import { createElement } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function AreaSavedPresetsListItem({
   preset,
@@ -160,6 +165,23 @@ export default function AreaSavedPresetsListItem({
             </div>
           )}
         </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div
+              className={
+                (uiStore.selectedPresetId === preset.id
+                  ? "text-blue-500 "
+                  : "") +
+                "text-sm font-bold overflow-hidden text-ellipsis whitespace-pre"
+              }
+            >
+              {preset.name}
+            </div>
+          </TooltipTrigger>
+          <TooltipContent align="start" side="right">
+            <p className="whitespace-pre-line">{preset.description}</p>
+          </TooltipContent>
+        </Tooltip>
         <div className="text-xs overflow-hidden text-ellipsis whitespace-pre">
           {preset.pathname}
         </div>
