@@ -1,3 +1,13 @@
+/**
+ * @author JungHee Wang (github : junghee111111)
+ * @since 2024-10-28
+ *
+ * @description This file provides a primitive renderer for rendering primitive types
+ * in the visualizer.
+ * It also provides utility functions for checking if a file is an image or video file.
+ * If the file is an image or video file, it renders the file as an image or video.
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CopiableText } from "@/app/ui/common/copiable-text";
 import { checkIfImageFile, checkIfVideoFile } from "./util";
