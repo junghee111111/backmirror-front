@@ -10,7 +10,6 @@ export default function Home() {
   return (
     <div>
       <ClientInitializer />
-
       <SidebarProvider>
         <AreaSavedPresets />
         <main className="gap-0 flex items-start w-full justify-start">

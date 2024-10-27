@@ -1,3 +1,11 @@
+/**
+ * @author JungHee Wang (github : junghee111111)
+ * @since 2024-10-28
+ *
+ * @description This file provides a recursive visualizer component that displays the structure of a JSON object in a tree format.
+ * The component is used to visualize any structure of the JSON object in the area visualizer.
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { CopiableText } from "../../../common/copiable-text";

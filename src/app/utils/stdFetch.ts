@@ -1,10 +1,16 @@
+/**
+ * @author JungHee Wang (github : junghee111111)
+ * @since 2024-10-28
+ *
+ * @description This file provides a utility function for making HTTP requests using Axios.
+ */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { TAvailableHttpMethods } from "../store/area-fetch-config.store";
 
 const ax = axios.create({
   withCredentials: true,
-  timeout: 10000,
+  timeout: 100000,
 });
 
 export type TStdFetchConfig = {

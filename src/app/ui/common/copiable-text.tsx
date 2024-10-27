@@ -1,3 +1,11 @@
+/**
+ * @author JungHee Wang (github : junghee111111)
+ * @since 2024-10-18
+ *
+ * @description This file provides a component that displays a text value that can be copied to the clipboard.
+ * When the user clicks on the text, the text is copied to the clipboard and a toast notification is displayed.
+ */
+
 import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,

@@ -1,3 +1,10 @@
+/**
+ * @author JungHee Wang (github : junghee111111)
+ * @since 2024-10-28
+ *
+ * @description This file provides a dialog component for saving a new preset.
+ */
+
 "use client";
 import { getPresets, savePreset } from "@/app/services/preset.service";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
@@ -103,7 +110,9 @@ export default function DialogMakeNewPreset() {
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">URL</TableCell>
-              <TableCell>{axiosConfigStore.url}</TableCell>
+              <TableCell className="overflow-hidden max-w-[240px]">
+                {axiosConfigStore.url}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
