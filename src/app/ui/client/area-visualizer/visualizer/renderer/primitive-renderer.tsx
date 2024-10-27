@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CopiableText } from "@/app/ui/common/copiable-text";
-import { checkIfImageFile } from "./util";
+import { checkIfImageFile, checkIfVideoFile } from "./util";
 
 export default function PrimitiveRenderer({
   obj,
@@ -21,6 +21,12 @@ export default function PrimitiveRenderer({
             height={400}
             alt={obj as string}
           />
+        )}
+        {checkIfVideoFile(obj) && (
+          <video width={400} height={400} controls>
+            <source src={obj as string} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         )}
         {obj === undefined || obj === null ? (
           <span className="text-red-500">NULL</span>
