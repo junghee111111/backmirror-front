@@ -1,11 +1,7 @@
 "use client";
 
-import { TPreset } from "@/app/store/preset.store";
-import { useEffect, useState } from "react";
-import AreaSavedPresetsListItem from "./area-saved-presets-list-item";
-import { ChevronDown, LucideLock, LucideUnlock } from "lucide-react";
-import { useAtomValue } from "jotai";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
+import { TPreset } from "@/app/store/preset.store";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -17,29 +13,37 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@radix-ui/react-collapsible";
+import { useAtomValue } from "jotai";
+import { ChevronDown, LucideLock, LucideUnlock } from "lucide-react";
+import { useEffect, useState } from "react";
+import AreaSavedPresetsListItem from "./area-saved-presets-list-item";
 
 export default function AreaSavedPresetsList() {
   const presets: Array<TPreset> = useAtomValue(
     SAreaFetchConfigUISettings
   ).presets;
   const [hosts, setHosts] = useState<string[]>([]);
+
   useEffect(() => {
     const tmpHosts: string[] = [];
-    for (const preset of presets) {
-      try {
-        const host = preset.protocol + "//" + preset.host;
-        if (!tmpHosts.includes(host)) {
-          tmpHosts.push(host);
+    if (Array.isArray(presets)) {
+      for (const preset of presets) {
+        try {
+          const host = preset.protocol + "//" + preset.host;
+          if (!tmpHosts.includes(host)) {
+            tmpHosts.push(host);
+          }
+        } catch (e: unknown) {
+          console.error("Error while parsing host", e);
+          continue;
         }
-      } catch (e: unknown) {
-        console.error("Error while parsing host", e);
-        continue;
       }
+      setHosts(tmpHosts);
     }
-    setHosts(tmpHosts);
   }, [presets]);
+
   return hosts.map((host) => {
-    const savedPresetsForHost = presets.filter((preset) => {
+    const savedPresetsForHost = presets?.filter((preset) => {
       const presetProtocolHost = preset.protocol + "//" + preset.host;
       return presetProtocolHost === host;
     });

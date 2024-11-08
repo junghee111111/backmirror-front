@@ -22,14 +22,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TableBody, TableCell, Table, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LucideFilePlus } from "lucide-react";
 import { useState } from "react";
 
-export default function DialogMakeNewPreset() {
+export default function DialogEditPreset() {
   const toast = useToast();
   const uiStore = useAtomValue(SAreaFetchConfigUISettings);
   const setUiStore = useSetAtom(SAreaFetchConfigUISettings);

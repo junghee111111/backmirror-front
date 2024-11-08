@@ -1,13 +1,13 @@
+import { getPresetById } from "@/app/services/preset.service";
+import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
+import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
+import { TPreset } from "@/app/store/preset.store";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LucideZap, LucideX, LucideFile, LucideEdit } from "lucide-react";
-import SavePresetButton from "./atoms/save-preset-button";
-import { useEffect, useState } from "react";
-import { TPreset } from "@/app/store/preset.store";
 import { useAtomValue, useSetAtom } from "jotai";
-import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
-import { getPresetById } from "@/app/services/preset.service";
-import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
+import { LucideEdit, LucideFile, LucideX, LucideZap } from "lucide-react";
+import { useEffect, useState } from "react";
+import SavePresetButton from "./atoms/save-preset-button";
 
 export default function AreaFetchConfigToolbar() {
   const UIStore = useAtomValue(SAreaFetchConfigUISettings);
@@ -20,42 +20,36 @@ export default function AreaFetchConfigToolbar() {
     if (
       `${selectedPreset?.protocol}//${selectedPreset?.host}${selectedPreset?.pathname}` !==
       `${axiosConfigStore.url}`
-    ) {
+    )
       return true;
-    }
-    if (selectedPreset?.method !== axiosConfigStore.method) {
-      return true;
-    }
+    if (selectedPreset?.method !== axiosConfigStore.method) return true;
     if (
       JSON.stringify(selectedPreset?.headersInput) !==
       JSON.stringify(UIStore.headersInput)
-    ) {
+    )
       return true;
-    }
-    if (selectedPreset?.bodyInput !== UIStore.bodyInput) {
-      return true;
-    }
+    if (selectedPreset?.bodyInput !== UIStore.bodyInput) return true;
     if (
       JSON.stringify(selectedPreset?.queryParamsInput) !==
       JSON.stringify(UIStore.queryParamsInput)
-    ) {
+    )
       return true;
-    }
     if (
       JSON.stringify(selectedPreset?.authInput) !==
       JSON.stringify(UIStore.authInput)
-    ) {
+    )
       return true;
-    }
     return false;
   };
+
   useEffect(() => {
     if (UIStore.selectedPresetId === null) {
       setSelectedPreset(null);
     } else {
       setSelectedPreset(getPresetById(UIStore.selectedPresetId));
     }
-  }, [UIStore.selectedPresetId]);
+  }, [UIStore.selectedPresetId, UIStore.presets]);
+
   const resetPreset = () => {
     setUIStore((prev) => ({
       ...prev,
@@ -71,6 +65,7 @@ export default function AreaFetchConfigToolbar() {
       url: "",
     }));
   };
+
   return (
     <div className="p-4 pb-0 flex items-center justify-between gap-2">
       <div className="flex items-center justify-start gap-2">

@@ -1,20 +1,20 @@
-import { generatePresetId } from "@/app/utils/encrypt";
 import { getPresets, savePreset } from "@/app/services/preset.service";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
 import { TPreset } from "@/app/store/preset.store";
+import { generatePresetId } from "@/app/utils/encrypt";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import {
-  TooltipProvider,
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LucideCopyPlus, LucideFilePlus, LucideSave } from "lucide-react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import DialogMakeNewPreset from "../../dialogs/dialog-make-new-preset";
+import DialogEditPreset from "../../dialogs/dialog-edit-preset";
 
 export default function SavePresetButton() {
   const toast = useToast();
@@ -96,7 +96,7 @@ export default function SavePresetButton() {
                   {uiStore.selectedPresetId ? "Duplicate" : "Save new"}
                 </Button>
               </DialogTrigger>
-              <DialogMakeNewPreset />
+              <DialogEditPreset />
             </Dialog>
           </TooltipTrigger>
           <TooltipContent align="center" side="bottom">
