@@ -2,7 +2,6 @@ import { AreaFetchConfigAuthMethod } from "@/app/data/area-fetch-config-auth-met
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { TKeyValueMethod } from "@/app/store/area-fetch-config.store";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -12,7 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { CheckedState } from "@radix-ui/react-checkbox";
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
 

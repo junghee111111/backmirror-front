@@ -1,13 +1,11 @@
 "use client";
+import { AREA_FETCH_CONFIG_TAB_HEIGHT } from "@/app/data/ui";
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { useAtomValue, useSetAtom } from "jotai";
 import { LucidePlus } from "lucide-react";
 import AuthKeyValueItem from "./request-options-tab-auth-item";
-import { useEffect } from "react";
-import { SAreaFetchConfigSettings } from "@/app/store/area-fetch-config.store";
-import { AREA_FETCH_CONFIG_TAB_HEIGHT } from "@/app/data/ui";
-import { useToast } from "@/hooks/use-toast";
 
 export default function RequestOptionsTabAuth() {
   const uiStore = useAtomValue(SAreaFetchConfigUISettings);

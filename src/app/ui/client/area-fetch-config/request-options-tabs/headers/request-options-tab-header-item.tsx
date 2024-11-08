@@ -2,11 +2,10 @@ import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.sto
 import { TKeyValue } from "@/app/store/area-fetch-config.store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { CheckedState } from "@radix-ui/react-checkbox";
 import { useSetAtom } from "jotai";
 import { LucideTrash } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CheckedState } from "@radix-ui/react-checkbox";
-import { Switch } from "@/components/ui/switch";
 
 export default function HeaderKeyValueItem({ item }: { item: TKeyValue }) {
   const setUIStore = useSetAtom(SAreaFetchConfigUISettings);

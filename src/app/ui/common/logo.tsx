@@ -1,5 +1,3 @@
-import { LucideCandy } from "lucide-react";
-
 export default function Logo() {
   return (
     <div>

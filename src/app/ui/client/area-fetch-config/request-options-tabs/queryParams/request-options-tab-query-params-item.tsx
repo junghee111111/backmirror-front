@@ -1,7 +1,6 @@
 import { SAreaFetchConfigUISettings } from "@/app/store/area-fetch-config-ui.store";
 import { TKeyValue } from "@/app/store/area-fetch-config.store";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { CheckedState } from "@radix-ui/react-checkbox";
