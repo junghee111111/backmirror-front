@@ -25,7 +25,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  DOCKER_IMAGE_NAME: backmirror-front-image
+  DOCKER_IMAGE_NAME: junghee111111/backmirror-front-image
   EC2_HOST: ec2-3-34-45-201.ap-northeast-2.compute.amazonaws.com
   EC2_SSH_USER: ec2-user
   PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
