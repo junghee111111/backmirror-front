@@ -1,0 +1,113 @@
+# Sample workflow for building and deploying a Next.js site to GitHub Pages
+#
+# To get started with Next.js see: https://nextjs.org/docs/getting-started
+#
+name: CI/CD BackMirror Front Application
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name : Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - run: bun run build
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          name: Deploy to AWS EC2 using Docker
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_IMAGE_NAME: 
+  EC2_HOST: 
+  EC2_SSH_USER: ec2-user
+  PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+jobs:
+  build-and-push-docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "22"
+        name: Deploy to AWS EC2 using Docker
+
+    - name : Setup Bun
+      uses: oven-sh/setup-bun@v2
+
+    - name: Set up application.properties
+      run: echo "${{ secrets.ENV_PRODUCTION }}" > .env
+
+    - name: Build with Gradle
+      run: bun install
+      run: bun run build
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+    - name: Login to Docker Hub using Access Token
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Push the Docker image
+      run: docker push ${{ env.DOCKER_IMAGE_NAME }}:latest
+
+
+  deploy-to-ec2:
+
+    needs: build-and-push-docker
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.EC2_HOST }}
+        username: ${{ env.EC2_SSH_USER }}
+        key: ${{ env.PRIVATE_KEY }}
+        script: |
+          CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-3000")
+
+          if [ ! -z "$CONTAINER_ID" ]; then
+            sudo docker stop $CONTAINER_ID
+            sudo docker rm $CONTAINER_ID
+          fi
+
+          sudo docker pull ${{ env.DOCKER_HUB }}
+          sudo docker run --name ${{ env.CONTAINER_NAME }} -d -p 80:3000 -e TZ=Asia/Seoul ${{ env.DOCKER_HUB }}
